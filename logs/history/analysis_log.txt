@@ -1,0 +1,201 @@
+Analyzing seagma-presensi...                                    
+
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\app\bindings\initial_binding.dart:48:17 - non_type_as_type_argument
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\app\bindings\initial_binding.dart:104:11 - non_type_as_type_argument
+   info - 'encryptedSharedPreferences' is deprecated and shouldn't be used. EncryptedSharedPreferences is deprecated and will be removed in v11. The Jetpack Security library is deprecated by Google. Your data will be automatically migrated to custom ciphers on first access. Remove this parameter - it will be ignored - lib\data\managers\session_manager.dart:8:30 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\data\mappers\user_mapper.dart:42:46 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\data\mappers\user_mapper.dart:43:46 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\data\mappers\user_mapper.dart:61:7 - avoid_print
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\data\providers\auth_provider.dart:2:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\data\repositories\attendance_repository.dart:2:8 - depend_on_referenced_packages
+   info - 'model' is deprecated and shouldn't be used. use record - lib\data\repositories\attendance_repository.dart:61:46 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\data\repositories\dynamic_outpost_repository.dart:2:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\data\repositories\leave_repository.dart:4:8 - depend_on_referenced_packages
+   info - 'model' is deprecated and shouldn't be used. use record - lib\data\repositories\leave_repository.dart:47:42 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\data\repositories\local\attendance_local_repository.dart:2:8 - depend_on_referenced_packages
+   info - Don't invoke 'print' in production code - lib\data\repositories\local\office_local_repository.dart:29:5 - avoid_print
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\data\repositories\user_repository.dart:2:8 - depend_on_referenced_packages
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\modules\admin\analytics\analytics_binding.dart:9:17 - non_type_as_type_argument
+  error - Undefined class 'IAdminRepository' - lib\modules\admin\analytics\analytics_controller.dart:9:9 - undefined_class
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\modules\admin\analytics\analytics_controller.dart:9:43 - non_type_as_type_argument
+   info - Statements in an if should be enclosed in a block - lib\modules\admin\analytics\analytics_view.dart:14:7 - curly_braces_in_flow_control_structures
+  error - Undefined class 'IAdminRepository' - lib\modules\admin\controllers\admin_controller.dart:15:9 - undefined_class
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\modules\admin\controllers\admin_controller.dart:15:48 - non_type_as_type_argument
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\admin_controller.dart:58:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\admin_controller.dart:75:7 - avoid_print
+   info - The type of the right operand ('int?') isn't a subtype or a supertype of the left operand ('String') - lib\modules\admin\controllers\admin_controller.dart:82:16 - unrelated_type_equality_checks
+  error - The method 'findAll' isn't defined for the type 'QueryBuilder' - lib\modules\admin\controllers\admin_controller.dart:118:69 - undefined_method
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\admin_controller.dart:121:7 - avoid_print
+  error - Undefined class 'IAdminRepository' - lib\modules\admin\controllers\leave_approval_controller.dart:10:9 - undefined_class
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\modules\admin\controllers\leave_approval_controller.dart:10:48 - non_type_as_type_argument
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\live_attendance_controller.dart:58:7 - avoid_print
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\admin\controllers\live_attendance_controller.dart:83:43 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\live_attendance_controller.dart:112:7 - avoid_print
+  error - Undefined class 'IAdminRepository' - lib\modules\admin\employee_list\employee_list_controller.dart:6:9 - undefined_class
+  error - The name 'IAdminRepository' isn't a type, so it can't be used as a type argument - lib\modules\admin\employee_list\employee_list_controller.dart:6:54 - non_type_as_type_argument
+   info - Don't invoke 'print' in production code - lib\modules\admin\logic\admin_dashboard_manager.dart:31:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\logic\admin_dashboard_manager.dart:42:7 - avoid_print
+   info - Statements in an if should be enclosed in a block - lib\modules\admin\logic\analytics_manager.dart:42:72 - curly_braces_in_flow_control_structures
+warning - The operand can't be 'null', so the condition is always 'true' - lib\modules\admin\logic\analytics_manager.dart:84:29 - unnecessary_null_comparison
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\live_attendance_view.dart:78:22 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\live_attendance_view.dart:80:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\live_attendance_view.dart:91:32 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\attendance_controller.dart:3:8 - depend_on_referenced_packages
+warning - The value of the field '_authService' isn't used - lib\modules\attendance\attendance_controller.dart:16:22 - unused_field
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkin\checkin_controller.dart:4:8 - depend_on_referenced_packages
+   info - Don't invoke 'print' in production code - lib\modules\attendance\checkin\checkin_controller.dart:233:7 - avoid_print
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkin\logic\checkin_action_manager.dart:4:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkin\logic\checkin_camera_manager.dart:6:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkin\logic\checkin_location_manager.dart:4:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkin\logic\checkin_status_helper.dart:1:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkin\logic\checkin_validator.dart:6:8 - depend_on_referenced_packages
+warning - Unused import: 'package:seagma_presensi/data/models/dynamic_outpost_model.dart' - lib\modules\attendance\checkin\logic\office_selection_manager.dart:8:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\attendance\checkin\widgets\checkin_map.dart:39:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\attendance\checkin\widgets\checkin_status_card.dart:23:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\attendance\checkin\widgets\checkin_time_display.dart:21:35 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkout\checkout_controller.dart:4:8 - depend_on_referenced_packages
+warning - The value of the field '_authService' isn't used - lib\modules\attendance\checkout\checkout_controller.dart:29:22 - unused_field
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\attendance\checkout\logic\checkout_camera_manager.dart:4:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\history\history_controller.dart:2:8 - depend_on_referenced_packages
+warning - The value of the field '_currentOffset' isn't used - lib\modules\history\history_controller.dart:43:7 - unused_field
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\history\logic\history_sync_manager.dart:2:8 - depend_on_referenced_packages
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:42:32 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:42:52 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:80:48 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:100:46 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\modules\history\logic\history_sync_manager.dart:101:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\history\widgets\history_item.dart:21:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\history\widgets\history_item.dart:26:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\history\widgets\history_item.dart:47:57 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\home\logic\home_data_manager.dart:41:18 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\home\logic\home_data_manager.dart:42:31 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\home\logic\home_data_manager.dart:53:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\home\logic\home_sync_manager.dart:36:7 - avoid_print
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\modules\leave\leave_controller.dart:4:8 - depend_on_referenced_packages
+warning - The value of the field '_logger' isn't used - lib\modules\leave\leave_controller.dart:12:16 - unused_field
+   info - 'baseUrl' is deprecated and shouldn't be used. use baseURL - lib\modules\leave\logic\leave_sync_manager.dart:17:39 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\notifications\notification_controller.dart:33:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\notifications\notification_controller.dart:53:7 - avoid_print
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:25:18 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:26:27 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:27:25 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:28:27 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:46:18 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:47:28 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:48:25 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:49:28 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:50:25 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:51:28 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\profile\logic\profile_data_manager.dart:66:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\profile\logic\profile_photo_manager.dart:73:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\profile\widgets\change_password_dialog.dart:82:7 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:46:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:79:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:82:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:103:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:116:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:180:41 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\auth_service.dart:2:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\device\device_fingerprint_manager.dart:5:8 - depend_on_referenced_packages
+   info - The imported package 'crypto' isn't a dependency of the importing package - lib\services\device\device_id_manager.dart:4:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\device\device_id_manager.dart:7:8 - depend_on_referenced_packages
+   info - 'encryptedSharedPreferences' is deprecated and shouldn't be used. EncryptedSharedPreferences is deprecated and will be removed in v11. The Jetpack Security library is deprecated by Google. Your data will be automatically migrated to custom ciphers on first access. Remove this parameter - it will be ignored - lib\services\device\device_id_manager.dart:16:30 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\device_service.dart:2:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\isar_service.dart:4:8 - depend_on_referenced_packages
+warning - The value of the field '_secureStorage' isn't used - lib\services\isar_service.dart:31:30 - unused_field
+warning - The value of the field '_encryptionKeyStorageName' isn't used - lib\services\isar_service.dart:32:23 - unused_field
+warning - The declaration '_getOrGenerateEncryptionKey' isn't referenced - lib\services\isar_service.dart:221:18 - unused_element
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\location\mock_location_guard.dart:5:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\location_service.dart:7:8 - depend_on_referenced_packages
+warning - The method doesn't override an inherited method - lib\services\location_service.dart:45:27 - override_on_non_overriding_member
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\permission_service.dart:6:8 - depend_on_referenced_packages
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:33:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:46:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:55:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:56:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:61:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:73:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:84:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:97:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:101:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:114:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:119:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:123:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:126:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:134:5 - avoid_print
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\sync\master_data_sync_manager.dart:1:8 - depend_on_referenced_packages
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\services\sync\master_data_sync_manager.dart:88:41 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\services\sync\master_data_sync_manager.dart:89:41 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\sync\notification_sync_manager.dart:1:8 - depend_on_referenced_packages
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\services\sync\notification_sync_manager.dart:52:38 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\services\sync\notification_sync_manager.dart:53:38 - deprecated_member_use
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\sync\sync_queue_manager.dart:2:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\sync_service.dart:6:8 - depend_on_referenced_packages
+   info - The type of the right operand ('ConnectivityResult') isn't a subtype or a supertype of the left operand ('List<ConnectivityResult>') - lib\services\sync_service.dart:68:41 - unrelated_type_equality_checks
+   info - The type of the right operand ('ConnectivityResult') isn't a subtype or a supertype of the left operand ('List<ConnectivityResult>') - lib\services\sync_service.dart:73:31 - unrelated_type_equality_checks
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\time\ntp_manager.dart:2:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\time_service.dart:4:8 - depend_on_referenced_packages
+   info - The imported package 'logger' isn't a dependency of the importing package - lib\services\wifi_service.dart:4:8 - depend_on_referenced_packages
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:18:5 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:21:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:23:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:25:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:28:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:29:7 - avoid_print
+warning - This method overrides a method annotated as '@mustCallSuper' in 'DisposableInterface', but doesn't invoke the overridden method - test\modules\attendance\checkin_controller_test.dart:320:8 - must_call_super
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:323:9 - overridden_fields
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:325:9 - overridden_fields
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:327:9 - overridden_fields
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:329:9 - overridden_fields
+warning - This method overrides a method annotated as '@mustCallSuper' in 'DisposableInterface', but doesn't invoke the overridden method - test\modules\attendance\checkin_controller_test.dart:348:8 - must_call_super
+   info - Field overrides a field inherited from 'CheckInLocationManager' - test\modules\attendance\checkin_controller_test.dart:351:9 - overridden_fields
+   info - Field overrides a field inherited from 'CheckInLocationManager' - test\modules\attendance\checkin_controller_test.dart:353:13 - overridden_fields
+

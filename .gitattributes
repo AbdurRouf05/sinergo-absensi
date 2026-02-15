@@ -1,0 +1,36 @@
+# Auto-detect text files and perform LF normalization
+* text=auto
+
+# Explicitly declare text files to ensure they are normalized
+*.dart text
+*.yaml text
+*.yml text
+*.md text
+*.json text
+*.lock text
+*.gradle text
+*.properties text
+*.xml text
+*.svg text
+*.html text
+*.css text
+*.js text
+*.ts text
+*.bat text
+*.ps1 text
+*.sh text eol=lf
+.gitignore text
+.gitattributes text
+
+# Declare binary files preventing accidental changes
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.ttf binary
+*.otf binary
+*.mp4 binary
+*.mov binary
+*.pdf binary

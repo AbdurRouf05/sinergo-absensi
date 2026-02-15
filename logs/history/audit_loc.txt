@@ -1,0 +1,15 @@
+attendance_model.g.dart: 4811
+daily_recap_model.g.dart: 1295
+leave_request_model.g.dart: 2402
+office_location_model.g.dart: 1784
+shift_model.g.dart: 1302
+sync_queue_model.g.dart: 2119
+user_model.g.dart: 2439
+checkin_controller.dart: 512
+checkin_view.dart: 377
+home_view.dart: 551
+profile_controller.dart: 325
+profile_view.dart: 356
+auth_service.dart: 392
+isar_service.dart: 417
+location_service.dart: 351

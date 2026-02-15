@@ -1,0 +1,150 @@
+Analyzing seagma-presensi...                                    
+
+   info - 'encryptedSharedPreferences' is deprecated and shouldn't be used. EncryptedSharedPreferences is deprecated and will be removed in v11. The Jetpack Security library is deprecated by Google. Your data will be automatically migrated to custom ciphers on first access. Remove this parameter - it will be ignored - lib\data\managers\session_manager.dart:8:30 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\data\mappers\user_mapper.dart:42:46 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\data\mappers\user_mapper.dart:43:46 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\data\mappers\user_mapper.dart:61:7 - avoid_print
+   info - 'model' is deprecated and shouldn't be used. use record - lib\data\repositories\attendance_repository.dart:61:46 - deprecated_member_use
+   info - 'model' is deprecated and shouldn't be used. use record - lib\data\repositories\leave_repository.dart:47:42 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\data\repositories\local\office_local_repository.dart:29:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\admin_controller.dart:59:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\admin_controller.dart:76:7 - avoid_print
+   info - The type of the right operand ('int?') isn't a subtype or a supertype of the left operand ('String') - lib\modules\admin\controllers\admin_controller.dart:83:16 - unrelated_type_equality_checks
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\admin_controller.dart:129:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\live_attendance_controller.dart:58:7 - avoid_print
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\admin\controllers\live_attendance_controller.dart:83:43 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\admin\controllers\live_attendance_controller.dart:112:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\logic\admin_dashboard_manager.dart:31:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\admin\logic\admin_dashboard_manager.dart:42:7 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\live_attendance_view.dart:78:22 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\live_attendance_view.dart:80:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\live_attendance_view.dart:91:32 - deprecated_member_use
+warning - The value of the field '_authService' isn't used - lib\modules\attendance\attendance_controller.dart:16:22 - unused_field
+   info - Don't invoke 'print' in production code - lib\modules\attendance\checkin\checkin_controller.dart:233:7 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\attendance\checkin\widgets\checkin_map.dart:39:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\attendance\checkin\widgets\checkin_status_card.dart:23:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\attendance\checkin\widgets\checkin_time_display.dart:21:35 - deprecated_member_use
+warning - The value of the field '_authService' isn't used - lib\modules\attendance\checkout\checkout_controller.dart:29:22 - unused_field
+warning - The value of the field '_currentOffset' isn't used - lib\modules\history\history_controller.dart:43:7 - unused_field
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:42:32 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:42:52 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:80:48 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\modules\history\logic\history_sync_manager.dart:100:46 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\modules\history\logic\history_sync_manager.dart:101:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\history\widgets\history_item.dart:21:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\history\widgets\history_item.dart:26:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\history\widgets\history_item.dart:47:57 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\home\logic\home_data_manager.dart:41:18 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\home\logic\home_data_manager.dart:42:31 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\home\logic\home_data_manager.dart:53:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\home\logic\home_sync_manager.dart:36:7 - avoid_print
+warning - The value of the field '_logger' isn't used - lib\modules\leave\leave_controller.dart:12:16 - unused_field
+   info - 'baseUrl' is deprecated and shouldn't be used. use baseURL - lib\modules\leave\logic\leave_sync_manager.dart:17:39 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\notifications\notification_controller.dart:33:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\notifications\notification_controller.dart:53:7 - avoid_print
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:25:18 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:26:27 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:27:25 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:28:27 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:46:18 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:47:28 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:48:25 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:49:28 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:50:25 - deprecated_member_use
+   info - 'expand' is deprecated and shouldn't be used. This field is superseded by the more generic get<T>(keyPath) method.
+You can access the expanded record models and fields using dot-notation similar to the regular record fields:
+record.get<String>("expand.user.email");
+record.get<RecordModel>("expand.user");
+record.get<List<RecordModel>>("expand.products"); - lib\modules\profile\logic\profile_data_manager.dart:51:28 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\modules\profile\logic\profile_data_manager.dart:66:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\profile\logic\profile_photo_manager.dart:73:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\modules\profile\widgets\change_password_dialog.dart:82:7 - avoid_print
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:46:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:79:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:82:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:103:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:116:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\security\security_violation_view.dart:180:41 - deprecated_member_use
+   info - 'encryptedSharedPreferences' is deprecated and shouldn't be used. EncryptedSharedPreferences is deprecated and will be removed in v11. The Jetpack Security library is deprecated by Google. Your data will be automatically migrated to custom ciphers on first access. Remove this parameter - it will be ignored - lib\services\device\device_id_manager.dart:16:30 - deprecated_member_use
+warning - The value of the field '_secureStorage' isn't used - lib\services\isar_service.dart:31:30 - unused_field
+warning - The value of the field '_encryptionKeyStorageName' isn't used - lib\services\isar_service.dart:32:23 - unused_field
+warning - The declaration '_getOrGenerateEncryptionKey' isn't referenced - lib\services\isar_service.dart:221:18 - unused_element
+warning - The method doesn't override an inherited method - lib\services\location_service.dart:45:27 - override_on_non_overriding_member
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:33:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:46:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:55:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:56:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:61:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:73:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:84:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:97:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:101:11 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:114:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:119:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:123:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:126:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\security_service.dart:134:5 - avoid_print
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\services\sync\master_data_sync_manager.dart:88:41 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\services\sync\master_data_sync_manager.dart:89:41 - deprecated_member_use
+   info - 'created' is deprecated and shouldn't be used. created is no longer mandatory field; use get<String>('created') - lib\services\sync\notification_sync_manager.dart:52:38 - deprecated_member_use
+   info - 'updated' is deprecated and shouldn't be used. updated is no longer mandatory field; use get<String>('updated') - lib\services\sync\notification_sync_manager.dart:53:38 - deprecated_member_use
+   info - The type of the right operand ('ConnectivityResult') isn't a subtype or a supertype of the left operand ('List<ConnectivityResult>') - lib\services\sync_service.dart:68:41 - unrelated_type_equality_checks
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:18:5 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:21:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:23:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:25:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:28:7 - avoid_print
+   info - Don't invoke 'print' in production code - test\debug_getx_test.dart:29:7 - avoid_print
+warning - This method overrides a method annotated as '@mustCallSuper' in 'DisposableInterface', but doesn't invoke the overridden method - test\modules\attendance\checkin_controller_test.dart:320:8 - must_call_super
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:323:9 - overridden_fields
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:325:9 - overridden_fields
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:327:9 - overridden_fields
+   info - Field overrides a field inherited from 'OfficeSelectionManager' - test\modules\attendance\checkin_controller_test.dart:329:9 - overridden_fields
+warning - This method overrides a method annotated as '@mustCallSuper' in 'DisposableInterface', but doesn't invoke the overridden method - test\modules\attendance\checkin_controller_test.dart:348:8 - must_call_super
+   info - Field overrides a field inherited from 'CheckInLocationManager' - test\modules\attendance\checkin_controller_test.dart:351:9 - overridden_fields
+   info - Field overrides a field inherited from 'CheckInLocationManager' - test\modules\attendance\checkin_controller_test.dart:353:13 - overridden_fields
+

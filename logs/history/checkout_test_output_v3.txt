@@ -1,0 +1,32 @@
+00:00 +0: loading D:/coding/flutter/presensi/seagma-presensi/test/modules/attendance/checkout_controller_test.dart
+00:00 +0: Checkout Controller Tests Should detect when no check-in exists
+00:00 +0 -1: Checkout Controller Tests Should detect when no check-in exists [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+00:00 +0 -1: Checkout Controller Tests Should prevent double checkout
+00:00 +0 -2: Checkout Controller Tests Should prevent double checkout [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+00:00 +0 -2: Checkout Controller Tests Should block on mock location
+00:00 +0 -3: Checkout Controller Tests Should block on mock location [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+00:00 +0 -3: Checkout Controller Tests Should block on time manipulation
+00:00 +0 -4: Checkout Controller Tests Should block on time manipulation [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+00:00 +0 -4: Checkout Controller Tests Success checkout - Dev mode skips GPS validation
+00:00 +0 -5: Checkout Controller Tests Success checkout - Dev mode skips GPS validation [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+00:00 +0 -5: Checkout Controller Tests Optional photo capture allowed
+00:00 +0 -6: Checkout Controller Tests Optional photo capture allowed [E]
+  Instance of 'FileNotFoundError'
+  package:flutter_dotenv/src/dotenv.dart 207:7  DotEnv._getEntriesFromFile
+  
+00:00 +0 -6: Some tests failed.

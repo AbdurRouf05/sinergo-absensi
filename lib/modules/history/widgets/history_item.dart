@@ -1,0 +1,124 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import '../../../../data/models/attendance_model.dart';
+import '../../../../app/theme/app_colors.dart';
+
+class HistoryItem extends StatelessWidget {
+  final AttendanceLocal record;
+
+  const HistoryItem({super.key, required this.record});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        border: Border.all(color: AppColors.grey200.withValues(alpha: 0.5)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Kiri: Tanggal & Badge Status
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                DateFormat('d MMM yyyy', 'id_ID').format(record.checkInTime),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.grey900,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: _getStatusColor(record.status).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  record.status.displayName,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: _getStatusColor(record.status),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // Kanan: Jam Masuk & Pulang
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _buildTimeRow(
+                'Masuk',
+                DateFormat('HH:mm').format(record.checkInTime),
+                AppColors.success,
+              ),
+              const SizedBox(height: 4),
+              _buildTimeRow(
+                'Pulang',
+                record.checkOutTime != null
+                    ? DateFormat('HH:mm').format(record.checkOutTime!)
+                    : '--:--',
+                record.checkOutTime != null
+                    ? AppColors.error
+                    : AppColors.grey400,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimeRow(String label, String time, Color color) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          '$label: ',
+          style: const TextStyle(fontSize: 12, color: AppColors.grey500),
+        ),
+        Text(
+          time,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Color _getStatusColor(AttendanceStatus status) {
+    switch (status) {
+      case AttendanceStatus.present:
+        return AppColors.success;
+      case AttendanceStatus.late:
+        return AppColors.warning;
+      case AttendanceStatus.absent:
+        return AppColors.error;
+      case AttendanceStatus.leave:
+        return AppColors.info;
+      case AttendanceStatus.halfDay:
+        return AppColors.warning;
+      case AttendanceStatus.pendingReview:
+        return Colors.orange.shade800;
+    }
+  }
+}
