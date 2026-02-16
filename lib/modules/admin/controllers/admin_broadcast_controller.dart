@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 
 class AdminBroadcastController extends GetxController {
   final IAuthService _authService = Get.find<IAuthService>();
@@ -44,14 +44,26 @@ class AdminBroadcastController extends GetxController {
     }
   }
 
+  // GOLDEN CODE: DO NOT MODIFY WITHOUT PERMISSION
+  // -------------------------------------------------------------------------
   Future<void> sendBroadcast() async {
     final title = titleController.text.trim();
     final message = messageController.text.trim();
     final target = selectedTarget.value;
 
     if (title.isEmpty || message.isEmpty) {
-      Get.snackbar("Error", "Judul dan Pesan wajib diisi",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Error"),
+          content: const Text("Judul dan Pesan wajib diisi"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
       return;
     }
 
@@ -68,22 +80,32 @@ class AdminBroadcastController extends GetxController {
       }
 
       if (targetIds.isEmpty) {
-        Get.snackbar("Error", "Tidak ada user target ditemukan",
-            backgroundColor: Colors.red, colorText: Colors.white);
+        Get.dialog(
+          AlertDialog(
+            title: const Text("Error"),
+            content: const Text("Tidak ada user target ditemukan"),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child: const Text("Tutup"),
+              ),
+            ],
+          ),
+        );
         return;
       }
 
       // PERSONAL COPY STRATEGY: Create ONE record PER user
-      // This ensures each user has their own is_read state.
-      // If User A reads their copy, User B's copy stays unread.
       final pb = _authService.pb;
       final adminId = _authService.currentUser.value?.id;
 
+      // Use Future.forEach to avoid overwhelming server if array is huge,
+      // but map + wait is fine for now < 100 users.
       final futures = targetIds.map((uid) {
         return pb.collection('notifications').create(body: {
           'title': title,
           'message': message,
-          'user_id': [uid], // Single user per record
+          'user_id': uid, // Single user per record (Relation)
           'type': 'info',
           'is_read': false,
           'created_by': adminId,
@@ -92,22 +114,43 @@ class AdminBroadcastController extends GetxController {
 
       await Future.wait(futures);
 
-      Get.snackbar(
-          "Sukses", "Pengumuman berhasil dikirim ke ${targetIds.length} orang",
-          backgroundColor: Colors.green, colorText: Colors.white);
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Berhasil"),
+          content:
+              Text("Pengumuman berhasil dikirim ke ${targetIds.length} orang."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back(); // Close Dialog
+                Get.back(); // Close Page
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
 
       // Reset Form
       titleController.clear();
       messageController.clear();
       selectedTarget.value = 'all';
-
-      // Close page? Optional. User may want to send another.
-      // Get.back();
     } catch (e) {
-      Get.snackbar("Error", "Gagal mengirim: $e",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Gagal"),
+          content: Text("Gagal mengirim: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
     } finally {
       isLoading.value = false;
     }
   }
+  // -------------------------------------------------------------------------
 }

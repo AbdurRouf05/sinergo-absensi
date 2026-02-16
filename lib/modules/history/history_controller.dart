@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/sync_service.dart';
 
 import 'logic/history_sync_manager.dart';
 
@@ -38,8 +38,9 @@ class HistoryController extends GetxController {
   final Rx<DateFilterType> filterType = DateFilterType.thisMonth.obs;
 
   // Pagination
-  static const int _pageSize = 30;
+  static const int _pageSize = 20;
   final RxBool hasMoreData = true.obs;
+  int _currentPage = 0; // Internal page counter
 
   @override
   void onInit() {
@@ -54,25 +55,38 @@ class HistoryController extends GetxController {
       final (start, end) = _calculateDateRange(filterType.value);
       filterStartDate.value = start;
       filterEndDate.value = end;
-      loadHistory();
+      // Filter change always resets pagination
+      loadHistory(reset: true);
     });
 
     if (Get.isRegistered<ISyncService>()) {
       ever(Get.find<ISyncService>().syncStatus, (status) {
         if (status == 'synced') {
-          loadHistory(loadMore: false);
+          // Sync might bring new data, but to be safe we just refresh current view
+          // OR we could silently update. For now, let's keep it simple.
+          loadHistory(reset: true);
         }
       });
     }
   }
 
-  Future<void> loadHistory({bool loadMore = false}) async {
+  Future<void> loadHistory({bool loadMore = false, bool reset = false}) async {
     try {
-      if (!loadMore) {
-        isLoading.value = true;
+      if (reset) {
+        _currentPage = 0;
+        attendanceRecords.clear();
         hasMoreData.value = true;
+        isLoading.value = true;
         hasError.value = false;
         errorMessage.value = '';
+      } else if (loadMore) {
+        if (!hasMoreData.value || isLoading.value) {
+          return; // Prevent duplicate calls
+        }
+        isLoading.value = true;
+      } else {
+        // Initial load (default)
+        isLoading.value = true;
       }
 
       final user = _authService.currentUser.value;
@@ -83,33 +97,36 @@ class HistoryController extends GetxController {
         return;
       }
 
+      final offset = _currentPage * _pageSize;
+
       final records = await _isarService.getAttendanceHistory(
         user.odId,
         startDate: filterStartDate.value,
         endDate: filterEndDate.value,
         limit: _pageSize,
+        offset: offset,
       );
 
-      if (!loadMore) {
+      if (reset || !loadMore) {
         attendanceRecords.assignAll(records);
-        if (records.isEmpty) {
+        // If empty on reset, try fetch remote once
+        if (records.isEmpty && reset) {
           await _syncManager.fetchRemoteHistory();
           // Reload local after sync
           _reloadLocal(user.odId);
-        } else {
-          _syncManager.fetchRemoteHistory().then((updated) {
-            if (updated) _reloadLocal(user.odId);
-          });
         }
       } else {
         attendanceRecords.addAll(records);
       }
 
+      // Update Pagination State
       if (records.length < _pageSize) {
         hasMoreData.value = false;
+      } else {
+        _currentPage++;
       }
     } catch (e) {
-      if (!loadMore) {
+      if (reset || !loadMore) {
         hasError.value = true;
         errorMessage.value = 'Gagal memuat riwayat: ${e.toString()}';
       }
@@ -120,17 +137,20 @@ class HistoryController extends GetxController {
   }
 
   Future<void> _reloadLocal(String userId) async {
+    // Only reload the first page to be safe
     final records = await _isarService.getAttendanceHistory(
       userId,
       startDate: filterStartDate.value,
       endDate: filterEndDate.value,
       limit: _pageSize,
+      offset: 0,
     );
     attendanceRecords.assignAll(records);
+    _currentPage = 1; // Prepare for next page
   }
 
   Future<void> refreshHistory() async {
-    await loadHistory(loadMore: false);
+    await loadHistory(reset: true);
   }
 
   void updateDateRange(DateTime start, DateTime end) {

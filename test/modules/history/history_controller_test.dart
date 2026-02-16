@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
-import 'package:attendance_fusion/modules/history/history_controller.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
+import 'package:sinergo_app/modules/history/history_controller.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/sync_service.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
 
 // Manual Mocks
 class MockIsarService extends Mock implements IsarService {
@@ -16,6 +16,7 @@ class MockIsarService extends Mock implements IsarService {
     DateTime? startDate,
     DateTime? endDate,
     int? limit,
+    int offset = 0,
   }) async {
     return super.noSuchMethod(
       Invocation.method(#getAttendanceHistory, [
@@ -95,7 +96,8 @@ void main() {
     // Manually trigger onInit for testing if not using Get.put
     controller.onInit();
 
-    await Future.delayed(const Duration(milliseconds: 100)); // wait for loadHistory
+    await Future.delayed(
+        const Duration(milliseconds: 100)); // wait for loadHistory
 
     // Assert
     expect(controller.attendanceRecords.length, 2);
@@ -112,7 +114,8 @@ void main() {
     controller = HistoryController(
         isarService: mockIsarService, authService: mockAuthService);
     controller.onInit();
-    await Future.delayed(const Duration(milliseconds: 100)); // wait for loadHistory
+    await Future.delayed(
+        const Duration(milliseconds: 100)); // wait for loadHistory
 
     // Assert
     expect(controller.hasError.value, true);

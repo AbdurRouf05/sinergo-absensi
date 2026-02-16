@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/modules/attendance/attendance_controller.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/services/permission_service.dart';
-import 'package:attendance_fusion/services/time_service.dart';
-import 'package:attendance_fusion/services/wifi_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:flutter/foundation.dart'; // for debugPrint
+import 'package:sinergo_app/modules/attendance/attendance_controller.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/services/permission_service.dart';
+import 'package:sinergo_app/services/time_service.dart';
+import 'package:sinergo_app/services/wifi_service.dart';
+import '../../services/smart_recap_service.dart';
+import '../../services/notification_service.dart';
 
 import '../history/history_controller.dart';
 import 'logic/home_data_manager.dart';
@@ -29,8 +32,9 @@ class HomeController extends GetxController {
   late final HomeSyncManager syncManager;
 
   // External Controllers
-  final AttendanceController attendanceController =
-      Get.put(AttendanceController());
+  final AttendanceController attendanceController = Get.put(
+    AttendanceController(),
+  );
   final HistoryController historyController = Get.put(HistoryController());
 
   // User data
@@ -45,23 +49,58 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     // Initialize Managers
-    diagnosticsManager =
-        HomeDiagnosticsManager(_wifiService, _locationService, _timeService);
+    diagnosticsManager = HomeDiagnosticsManager(
+      _wifiService,
+      _locationService,
+      _timeService,
+    );
     dataManager = HomeDataManager(_authService, _isarService);
     syncManager = HomeSyncManager(_authService, _isarService);
 
     _updateGreeting();
-    // Attendance logic handled by AttendanceController, but we listen to it
-    // Actually our SyncManager now handles UI rendering for Dashboard specific cards?
-    // Or we keep listening to AttendanceController?
-    // The original code listened to AttendanceController.
-    // Let's rely on SyncManager for the Dashboard card data as it is customized there.
-    // BUT, we also want to trigger SyncManager when AttendanceController updates.
 
     // Initial Load
     diagnosticsManager.loadDiagnostics();
     dataManager.loadShift();
     syncManager.checkTodayAttendance();
+
+    // 🛡️ Safety Guardrails: Permissions & Realtime
+    _initNotificationsAndRealtime();
+  }
+
+  Future<void> _initNotificationsAndRealtime() async {
+    try {
+      // 1. Request Permissions (Android 13+ / iOS)
+      if (Get.isRegistered<NotificationService>()) {
+        await Get.find<NotificationService>().requestPermissions();
+      }
+
+      // 2. Realtime Listener (Protected)
+      final pb = _authService.pb;
+      // Only subscribe if we are likely online to avoid immediate socket errors,
+      // though try-catch handles it too.
+
+      pb.collection('notifications').subscribe('*', (e) {
+        if (e.action == 'create') {
+          // Trigger Local Notification
+          final data = e.record?.data;
+          if (data != null && Get.isRegistered<NotificationService>()) {
+            final title = data['title']?.toString() ?? 'Pemberitahuan Baru';
+            final message =
+                data['message']?.toString() ?? 'Cek aplikasi untuk detail.';
+
+            Get.find<NotificationService>().showNotification(
+              id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+              title: title,
+              body: message,
+            );
+          }
+        }
+      });
+    } catch (e) {
+      // 🛡️ Silent Failure: Do not crash app if Realtime/Socket fails
+      debugPrint("Realtime/Notification Init Warning: $e");
+    }
   }
 
   // Proxies for UI
@@ -80,6 +119,9 @@ class HomeController extends GetxController {
     await syncManager.checkTodayAttendance();
     await dataManager.loadShift();
     await diagnosticsManager.loadDiagnostics();
+    if (Get.isRegistered<SmartRecapService>()) {
+      Get.find<SmartRecapService>().refreshInsight();
+    }
   }
 
   void changeTab(int index) {

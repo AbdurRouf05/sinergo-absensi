@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../app/theme/app_colors.dart';
+import '../../core/widgets/sinergo_logo.dart';
 import 'splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
@@ -247,9 +248,9 @@ class _AnimatedSplashBodyState extends State<_AnimatedSplashBody>
                 ],
               ),
               padding: const EdgeInsets.all(16),
-              child: Image.asset(
-                'assets/images/fusion_logo.png',
-                fit: BoxFit.contain,
+              child: const SinergoLogo(
+                size: 80,
+                color: Colors.white,
               ),
             ),
           ),
@@ -262,7 +263,7 @@ class _AnimatedSplashBodyState extends State<_AnimatedSplashBody>
           child: FadeTransition(
             opacity: _titleFade,
             child: const Text(
-              'ATTENDANCE',
+              'SINERGO',
               style: TextStyle(
                 fontSize: 38,
                 fontWeight: FontWeight.bold,
@@ -278,7 +279,7 @@ class _AnimatedSplashBodyState extends State<_AnimatedSplashBody>
         FadeTransition(
           opacity: _subtitleFade,
           child: const Text(
-            'F U S I O N',
+            '. I D',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w300,

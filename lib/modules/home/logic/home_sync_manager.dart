@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 class HomeSyncManager {
   final Logger _logger = Logger();
@@ -82,13 +82,15 @@ class HomeSyncManager {
       ..odId = serverRecord.id
       ..userId = user.odId
       ..locationId = serverRecord.getStringValue('location')
-      ..checkInTime = checkIn
+      ..checkInTime =
+          checkIn // Already converted if passed from above, but ensure consistency
       ..checkOutTime = checkOut
       ..status = status
       ..isSynced = true
       ..syncedAt = DateTime.now()
-      ..createdAt = DateTime.tryParse(serverRecord.get<String>('created')) ??
-          DateTime.now()
+      ..createdAt =
+          DateTime.tryParse(serverRecord.get<String>('created'))?.toLocal() ??
+              DateTime.now()
       ..isOfflineEntry = serverRecord.getBoolValue('is_offline_entry')
       ..isWifiVerified = serverRecord.getBoolValue('is_wifi_verified')
       ..deviceIdUsed = serverRecord.getStringValue('device_id').isNotEmpty
@@ -121,6 +123,7 @@ class HomeSyncManager {
   }
 
   String _formatTime(DateTime dt) {
-    return DateFormat('HH:mm').format(dt);
+    return DateFormat('HH:mm')
+        .format(dt.toLocal()); // FIX: Convert UTC to Local
   }
 }

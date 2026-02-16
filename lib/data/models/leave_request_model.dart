@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/core/constants/app_constants.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
 
 part 'leave_request_model.g.dart';
 

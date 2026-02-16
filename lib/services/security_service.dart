@@ -128,7 +128,7 @@ class SecurityService extends GetxService
       if (!isRealDevice) {
         _handleThreat(
           "Emulator Terdeteksi",
-          "Aplikasi ATTENDANCE FUSION hanya diizinkan berjalan di perangkat fisik (HP) untuk validasi biometrik & lokasi yang akurat.",
+          "Aplikasi SINERGO.ID hanya diizinkan berjalan di perangkat fisik (HP) untuk validasi biometrik & lokasi yang akurat.",
           "Gunakan HP Android fisik (bukan Emulator/Virtual Machine) untuk melakukan presensi.",
         );
         return false;

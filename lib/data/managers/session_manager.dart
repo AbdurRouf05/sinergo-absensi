@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/core/constants/app_constants.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
 
 class SessionManager {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage(

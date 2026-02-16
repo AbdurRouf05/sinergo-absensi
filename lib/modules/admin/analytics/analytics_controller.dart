@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/repositories/interfaces/i_admin_repository.dart';
-import 'package:attendance_fusion/modules/admin/logic/analytics_manager.dart';
-import 'package:attendance_fusion/data/models/dto/recap_row_model.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
-import 'package:attendance_fusion/services/export_service.dart';
+import 'package:sinergo_app/data/repositories/admin_recap_repository.dart';
+import 'package:sinergo_app/modules/admin/logic/analytics_manager.dart';
+import 'package:sinergo_app/data/models/dto/recap_row_model.dart';
+import 'package:sinergo_app/services/sync_service.dart';
+import 'package:sinergo_app/services/export_service.dart';
 
 class AnalyticsController extends GetxController {
-  final IAdminRepository _repo = Get.find<IAdminRepository>();
+  final AdminRecapRepository _repo = Get.find<AdminRecapRepository>();
   final ExportService _exportService = ExportService();
 
   var isLoading = false.obs;

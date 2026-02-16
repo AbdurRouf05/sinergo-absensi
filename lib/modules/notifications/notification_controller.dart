@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
-import 'package:attendance_fusion/data/repositories/notification_repository.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
+import 'package:sinergo_app/data/repositories/notification_repository.dart';
+import 'package:sinergo_app/services/sync_service.dart';
 
 class NotificationController extends GetxController {
   final INotificationRepository _notificationRepo =

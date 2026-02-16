@@ -29,54 +29,79 @@ class HistoryItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Kiri: Tanggal & Badge Status
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                DateFormat('d MMM yyyy', 'id_ID').format(record.checkInTime),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.grey900,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(record.status).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  record.status.displayName,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: _getStatusColor(record.status),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  DateFormat('d MMM yyyy', 'id_ID').format(record.checkInTime),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.grey900,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 6),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color:
+                        _getStatusColor(record.status).withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    record.status.displayName,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: _getStatusColor(record.status),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
-          // Kanan: Jam Masuk & Pulang
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          // Kanan: Jam Masuk & Pulang + Sync Icon
+          Row(
             children: [
-              _buildTimeRow(
-                'Masuk',
-                DateFormat('HH:mm').format(record.checkInTime),
-                AppColors.success,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _buildTimeRow(
+                    'Masuk',
+                    DateFormat('HH:mm').format(record.checkInTime),
+                    AppColors.success,
+                  ),
+                  const SizedBox(height: 4),
+                  _buildTimeRow(
+                    'Pulang',
+                    record.checkOutTime != null
+                        ? DateFormat('HH:mm').format(record.checkOutTime!)
+                        : '--:--',
+                    record.checkOutTime != null
+                        ? AppColors.error
+                        : AppColors.grey400,
+                  ),
+                ],
               ),
-              const SizedBox(height: 4),
-              _buildTimeRow(
-                'Pulang',
-                record.checkOutTime != null
-                    ? DateFormat('HH:mm').format(record.checkOutTime!)
-                    : '--:--',
-                record.checkOutTime != null
-                    ? AppColors.error
-                    : AppColors.grey400,
+              const SizedBox(width: 12),
+              // Sync Indicator
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    record.isSynced ? Icons.cloud_done : Icons.cloud_off,
+                    color: record.isSynced ? AppColors.primary : Colors.orange,
+                    size: 20,
+                  ),
+                  if (!record.isSynced)
+                    const Text(
+                      "Local",
+                      style: TextStyle(fontSize: 8, color: Colors.orange),
+                    )
+                ],
               ),
             ],
           ),

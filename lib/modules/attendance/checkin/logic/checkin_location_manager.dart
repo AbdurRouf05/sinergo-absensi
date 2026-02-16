@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/services/permission_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/services/permission_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'office_selection_manager.dart';
 

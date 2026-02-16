@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 class NotificationLocalRepository {
   final IsarService _isarService;

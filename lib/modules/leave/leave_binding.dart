@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/leave/leave_controller.dart';
-import 'package:attendance_fusion/data/repositories/leave_repository.dart';
+import 'package:sinergo_app/modules/leave/leave_controller.dart';
+import 'package:sinergo_app/data/repositories/leave_repository.dart';
 
 class LeaveBinding extends Bindings {
   @override

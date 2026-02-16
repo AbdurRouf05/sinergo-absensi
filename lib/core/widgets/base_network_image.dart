@@ -60,9 +60,10 @@ class BaseNetworkImage extends StatelessWidget {
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(borderRadius),
         ),
-        child: Image.asset(
-          fallbackAsset ?? 'assets/images/fusion_logo.png',
-          fit: BoxFit.contain,
+        child: Icon(
+          Icons.person,
+          size: (width ?? 40) * 0.6,
+          color: Colors.grey[400],
         ),
       ),
     );

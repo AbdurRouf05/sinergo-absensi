@@ -27,7 +27,7 @@ class CheckInMap extends GetView<CheckinController> {
         children: [
           TileLayer(
             urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            userAgentPackageName: 'com.attendancefusion.app',
+            userAgentPackageName: 'id.sinergo.app',
           ),
           if (pos != null)
             CircleLayer(

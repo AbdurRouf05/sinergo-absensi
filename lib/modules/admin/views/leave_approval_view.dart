@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/admin/controllers/leave_approval_controller.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/modules/admin/views/widgets/leave_request_card.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
+import 'package:sinergo_app/modules/admin/controllers/leave_approval_controller.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/modules/admin/views/widgets/leave_request_card.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
 
 class LeaveApprovalView extends StatelessWidget {
   const LeaveApprovalView({super.key});

@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/time_result_model.dart';
-import 'package:attendance_fusion/services/device_service.dart';
-import 'package:attendance_fusion/services/security_service.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/time_result_model.dart';
+import 'package:sinergo_app/services/device_service.dart';
+import 'package:sinergo_app/services/security_service.dart';
 
 class CheckInValidator {
   final Logger _logger = Logger();

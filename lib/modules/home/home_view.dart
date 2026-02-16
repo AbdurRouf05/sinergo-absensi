@@ -12,6 +12,7 @@ import 'widgets/home_quick_actions.dart';
 import 'widgets/home_today_status.dart';
 import 'widgets/home_recent_attendance.dart';
 import 'widgets/home_diagnostics.dart';
+import 'widgets/smart_insight_card.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -30,7 +31,7 @@ class HomeView extends GetView<HomeController> {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: const Text('Attendance Fusion'),
+      title: const Text('Sinergo.id'),
       actions: [
         Obx(() {
           final notifController = Get.find<NotificationController>();
@@ -72,7 +73,9 @@ class HomeView extends GetView<HomeController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HomeHeaderProfile(),
-          SizedBox(height: 24),
+          SizedBox(height: 16),
+          SmartInsightCard(),
+          SizedBox(height: 16),
           HomeQuickActions(),
           SizedBox(height: 24),
           HomeTodayStatus(),

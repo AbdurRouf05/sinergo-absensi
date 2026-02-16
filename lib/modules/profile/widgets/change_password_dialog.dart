@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 
 class ChangePasswordDialog extends StatelessWidget {
   final IAuthService authService;

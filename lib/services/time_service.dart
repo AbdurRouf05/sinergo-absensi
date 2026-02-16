@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/time_result_model.dart';
-import 'package:attendance_fusion/services/time/ntp_manager.dart';
+import 'package:sinergo_app/data/models/time_result_model.dart';
+import 'package:sinergo_app/services/time/ntp_manager.dart';
 
-export 'package:attendance_fusion/data/models/time_result_model.dart';
+export 'package:sinergo_app/data/models/time_result_model.dart';
 
 /// Interface for TimeService to enable clean mocking in tests
 abstract class ITimeService {

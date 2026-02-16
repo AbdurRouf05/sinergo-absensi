@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_controller.dart';
-import 'package:attendance_fusion/modules/admin/views/widgets/overtime_request_card.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_controller.dart';
+import 'package:sinergo_app/modules/admin/views/widgets/overtime_request_card.dart';
 
 class OvertimeApprovalView extends StatelessWidget {
   const OvertimeApprovalView({super.key});

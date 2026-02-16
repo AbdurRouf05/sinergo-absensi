@@ -5,8 +5,8 @@ import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/core/constants/app_constants.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
 import 'package:uuid/uuid.dart';
 
 class DeviceIdManager {

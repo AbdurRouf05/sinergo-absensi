@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/checkin_controller.dart';
+import 'package:sinergo_app/modules/attendance/checkin/checkin_controller.dart';
 
 class CheckInSubmitButton extends GetView<CheckinController> {
   const CheckInSubmitButton({super.key});

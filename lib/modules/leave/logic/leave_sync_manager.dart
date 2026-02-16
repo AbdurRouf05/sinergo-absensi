@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 import 'package:isar/isar.dart';
 
 class LeaveSyncManager {

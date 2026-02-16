@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/app/routes/app_routes.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/app/routes/app_routes.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../profile_controller.dart';

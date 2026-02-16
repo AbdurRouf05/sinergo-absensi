@@ -36,11 +36,11 @@ void main() async {
   // Initialize date formatting for Indonesian locale
   await initializeDateFormatting('id_ID', null);
 
-  runApp(const AttendanceFusionApp());
+  runApp(const SinergoApp());
 }
 
-class AttendanceFusionApp extends StatelessWidget {
-  const AttendanceFusionApp({super.key});
+class SinergoApp extends StatelessWidget {
+  const SinergoApp({super.key});
 
   @override
   Widget build(BuildContext context) {

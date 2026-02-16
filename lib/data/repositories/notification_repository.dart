@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/data/models/sync_queue_model.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/data/models/sync_queue_model.dart';
 
 abstract class INotificationRepository {
   Future<List<NotificationLocal>> getNotifications();

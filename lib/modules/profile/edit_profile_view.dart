@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
 import 'profile_controller.dart';
 
 class EditProfileView extends GetView<ProfileController> {

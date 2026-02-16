@@ -67,32 +67,34 @@ class HistoryView extends GetView<HistoryController> {
                   );
                 }
 
-                return ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: controller.attendanceRecords.length + 1,
-                  itemBuilder: (context, index) {
-                    // Pagination loader at bottom
-                    if (index == controller.attendanceRecords.length) {
-                      return controller.hasMoreData.value
-                          ? const Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            )
-                          : const SizedBox(height: 40); // Bottom padding
-                    }
-
-                    // Trigger pagination load
-                    if (index > controller.attendanceRecords.length - 5 &&
-                        controller.hasMoreData.value &&
-                        !controller.isLoading.value) {
+                return NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (!controller.isLoading.value &&
+                        scrollInfo.metrics.pixels >=
+                            scrollInfo.metrics.maxScrollExtent - 200 &&
+                        controller.hasMoreData.value) {
                       controller.loadHistory(loadMore: true);
                     }
-
-                    final record = controller.attendanceRecords[index];
-                    return HistoryItem(record: record);
+                    return true;
                   },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: controller.attendanceRecords.length +
+                        (controller.isLoading.value ? 1 : 0),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      if (index == controller.attendanceRecords.length) {
+                        return const Center(
+                            child: Padding(
+                                padding: EdgeInsets.all(16),
+                                child: CircularProgressIndicator()));
+                      }
+
+                      final record = controller.attendanceRecords[index];
+                      return HistoryItem(record: record);
+                    },
+                  ),
                 );
               }),
             ),

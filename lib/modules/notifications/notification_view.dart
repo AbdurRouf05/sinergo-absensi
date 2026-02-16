@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
 import '../../app/theme/app_colors.dart';
 import 'notification_controller.dart';
 import 'widgets/notification_card.dart';
@@ -63,27 +63,40 @@ class NotificationView extends GetView<NotificationController> {
 
   void _showNotificationDetail(NotificationLocal item) {
     controller.markAsRead(item);
-    Get.defaultDialog(
-      title: item.title,
-      titleStyle: const TextStyle(fontWeight: FontWeight.bold),
-      content: Column(
-        children: [
-          const SizedBox(height: 8),
-          Text(item.message, textAlign: TextAlign.center),
-          const SizedBox(height: 16),
-          Text(
-            DateFormat('dd MMM yyyy, HH:mm').format(item.createdAt),
-            style: const TextStyle(fontSize: 10, color: Colors.grey),
+    Get.dialog(
+      AlertDialog(
+        title: Text(
+          item.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            Text(item.message, textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            Text(
+              DateFormat('dd MMM yyyy, HH:mm').format(item.createdAt),
+              style: const TextStyle(fontSize: 10, color: Colors.grey),
+            ),
+          ],
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          SizedBox(
+            width: 120,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
           ),
         ],
-      ),
-      confirm: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-        ),
-        onPressed: () => Get.back(),
-        child: const Text("Tutup"),
       ),
     );
   }

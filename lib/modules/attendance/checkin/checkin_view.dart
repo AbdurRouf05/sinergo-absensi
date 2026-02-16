@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/widgets/checkin_camera_widget.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/widgets/checkin_map.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/widgets/office_selector_dropdown.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/widgets/checkin_status_card.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/widgets/checkin_submit_button.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/widgets/checkin_time_display.dart';
+import 'package:sinergo_app/modules/attendance/checkin/widgets/checkin_camera_widget.dart';
+import 'package:sinergo_app/modules/attendance/checkin/widgets/checkin_map.dart';
+import 'package:sinergo_app/modules/attendance/checkin/widgets/office_selector_dropdown.dart';
+import 'package:sinergo_app/modules/attendance/checkin/widgets/checkin_status_card.dart';
+import 'package:sinergo_app/modules/attendance/checkin/widgets/checkin_submit_button.dart';
+import 'package:sinergo_app/modules/attendance/checkin/widgets/checkin_time_display.dart';
 
 import 'checkin_controller.dart';
 

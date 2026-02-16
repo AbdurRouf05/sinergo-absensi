@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_broadcast_controller.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_broadcast_controller.dart';
 
 class AdminBroadcastView extends GetView<AdminBroadcastController> {
   const AdminBroadcastView({super.key});

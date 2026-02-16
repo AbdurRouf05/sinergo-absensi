@@ -2,15 +2,15 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-import 'package:attendance_fusion/core/constants/app_constants.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/services/device_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/data/providers/auth_provider.dart';
-import 'package:attendance_fusion/data/managers/session_manager.dart';
-import 'package:attendance_fusion/data/mappers/user_mapper.dart';
-import 'package:attendance_fusion/services/security_service.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/services/device_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/data/providers/auth_provider.dart';
+import 'package:sinergo_app/data/managers/session_manager.dart';
+import 'package:sinergo_app/data/mappers/user_mapper.dart';
+import 'package:sinergo_app/services/security_service.dart';
 
 /// Interface for AuthService to enable clean mocking in tests
 abstract class IAuthService {

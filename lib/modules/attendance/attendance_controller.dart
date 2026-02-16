@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/repositories/attendance_repository.dart';
-import 'package:attendance_fusion/app/routes/app_routes.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/repositories/attendance_repository.dart';
+import 'package:sinergo_app/app/routes/app_routes.dart';
+import 'package:sinergo_app/services/sync_service.dart';
 
 enum AttendanceState { notCheckedIn, checkedIn, completed }
 

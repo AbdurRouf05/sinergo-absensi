@@ -1,7 +1,7 @@
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/services/device_service.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/services/time_service.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/services/device_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/services/time_service.dart';
 
 class CheckoutValidator {
   final IDeviceService _deviceService;

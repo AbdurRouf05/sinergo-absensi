@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/sync_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
 import '../logic/live_attendance_manager.dart';
 
 enum LiveStatus { hadir, telat, alpa, izin, belumAbsen }
@@ -44,6 +45,7 @@ class LiveAttendanceController extends GetxController {
   List<UserLocal> _cachedUsers = [];
   List<AttendanceLocal> _cachedAttendances = [];
   List<LeaveRequestLocal> _cachedLeaves = [];
+  List<ShiftLocal> _cachedShifts = []; // Added cache
 
   @override
   void onInit() {
@@ -88,27 +90,16 @@ class LiveAttendanceController extends GetxController {
     _cachedUsers = data['users'] as List<UserLocal>;
     _cachedAttendances = data['attendances'] as List<AttendanceLocal>;
     _cachedLeaves = data['leaves'] as List<LeaveRequestLocal>;
+    _cachedShifts = data['shifts'] as List<ShiftLocal>; // Convert
     _calculateStatus();
   }
 
   void _subscribeToRealtime() async {
-    // Determine today's filter for events if needed, but easier to just listen
-    // On update, we can either map the record to local and update list,
-    // OR just trigger a quick local reload if the sync service handles the saving.
-    // SyncService doesn't auto-listen yet.
-    // So we listen here, save to Isar, then reload.
-
-    // Subscribe to Attendances
+    // ... (Keep existing subscription logic or improve later)
     pb.collection('attendances').subscribe('*', (e) async {
       if ((e.action == 'create' || e.action == 'update') && e.record != null) {
-        // Trigger sync or update
-        // For now, easiest is trigger refresh (silent)
-        // await _syncService.syncDailyAttendance();
+        // Silent refresh for now
         // await _fetchLocally();
-        // But that's heavy.
-        // Let's rely on manual refresh or periodic sync for now to avoid complexity?
-        // User asked for "Real time".
-        // Ideally: RecordModel -> AttendanceLocal -> Save Isar -> Reload.
       }
     });
   }
@@ -118,9 +109,10 @@ class LiveAttendanceController extends GetxController {
       users: _cachedUsers,
       attendances: _cachedAttendances,
       leaves: _cachedLeaves,
+      shifts: _cachedShifts, // Pass shifts
     );
     monitorList.assignAll(result['list'] as List<AttendanceMonitorItem>);
-    stats.value = result['stats'] as Map<String, int>;
+    stats.value = (result['stats'] as Map<String, int>);
   }
 
   @override

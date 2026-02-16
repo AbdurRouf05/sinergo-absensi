@@ -5,8 +5,8 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/repositories/user_repository.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/data/repositories/user_repository.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 
 class ProfilePhotoManager {
   final Logger _logger = Logger();

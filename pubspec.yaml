@@ -1,5 +1,5 @@
-name: attendance_fusion
-description: Attendance Fusion - Smart HR Attendance
+name: sinergo_app
+description: Sinergo.id - Smart Attendance & HR Platform
 publish_to: "none"
 version: 0.1.0+1
 
@@ -21,13 +21,12 @@ dependencies:
   path_provider: ^2.1.5
 
   # --- HARDWARE & SENSORS ---
-  geolocator: 11.0.0
+  geolocator: ^13.0.0 # Upgrade for V2 Embedding
   permission_handler: 11.3.0
-  image_picker: 1.0.7
-  # camera: REMOVED - not used, caused SDK 36 conflict. Use image_picker instead.
-  # file_picker: REMOVED - replaced with image_picker for UX improvement
+  image_picker: ^1.1.2 # Upgrade for V2 Embedding (Fixes Registrar Error)
+  # camera: REMOVED - Use image_picker
 
-  # --- PLUS PLUGINS (UPGRADED FOR web ^1.0.0 COMPAT) ---
+  # --- PLUS PLUGINS ---
   device_info_plus: ^10.0.0
   package_info_plus: ^8.0.0
   network_info_plus: ^6.0.0
@@ -35,7 +34,6 @@ dependencies:
 
   # --- SERVICES ---
   flutter_secure_storage: ^10.0.0
-  # freerasp: ^6.0.0
   safe_device: ^1.1.4
   workmanager: ^0.9.0+3
 
@@ -56,6 +54,12 @@ dependencies:
   flutter_dotenv: ^6.0.0
   month_picker_dialog: ^6.7.1
 
+  # --- AI & EXTRAS (Added for AttendanceFusion) ---
+  google_generative_ai: ^0.4.0
+  flutter_markdown: ^0.7.1
+  flutter_local_notifications: ^18.0.1
+
+  # --- OTHERS ---
   logger: any
   crypto: any
   pdf: ^3.11.3
@@ -63,6 +67,7 @@ dependencies:
   csv: ^7.1.0
   share_plus: ^12.0.1
   open_filex: ^4.7.0
+
 flutter:
   uses-material-design: true
   assets:
@@ -70,7 +75,7 @@ flutter:
     - assets/images/
     - assets/icons/
 
-# Splash Screen Configuration — Plain color, no logo (Flutter handles animation)
+# Splash Screen Configuration
 flutter_native_splash:
   color: "#2E3D8A"
   android_12:
@@ -96,7 +101,7 @@ dependency_overrides:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/fusion_icon.png"
+  image_path: "assets/images/sinergo_icon.png"
   min_sdk_android: 21
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/images/fusion_adaptive_fg.png"
+  adaptive_icon_foreground: "assets/images/sinergo_adaptive_fg.png"

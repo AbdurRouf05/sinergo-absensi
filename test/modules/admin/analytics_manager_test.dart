@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:attendance_fusion/modules/admin/logic/analytics_manager.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
+import 'package:sinergo_app/modules/admin/logic/analytics_manager.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
 
 void main() {
   group('AnalyticsManager Tests', () {

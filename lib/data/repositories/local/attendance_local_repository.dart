@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 class AttendanceLocalRepository {
   final Logger _logger = Logger();
@@ -47,6 +47,7 @@ class AttendanceLocalRepository {
     DateTime? startDate,
     DateTime? endDate,
     int? limit,
+    int offset = 0,
   }) async {
     var query = _isar.attendanceLocals.filter().userIdEqualTo(userId);
 
@@ -60,9 +61,9 @@ class AttendanceLocalRepository {
     var sortedQuery = query.sortByCheckInTimeDesc();
 
     if (limit != null) {
-      return await sortedQuery.limit(limit).findAll();
+      return await sortedQuery.offset(offset).limit(limit).findAll();
     }
-    return await sortedQuery.findAll();
+    return await sortedQuery.offset(offset).findAll();
   }
 
   /// Get unsynced attendance records

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import '../../../../app/theme/app_colors.dart';
+import '../../../../core/widgets/sinergo_logo.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        Image.asset(
-          'assets/images/fusion_logo.png',
-          width: 120,
-          height: 120,
+        SinergoLogo(
+          size: 120,
+          color: AppColors.primary,
         ),
-        const SizedBox(height: 24),
-        const Text(
-          'ATTENDANCE FUSION',
+        SizedBox(height: 24),
+        Text(
+          'SINERGO.ID',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -23,8 +23,8 @@ class LoginHeader extends StatelessWidget {
             letterSpacing: 2,
           ),
         ),
-        const SizedBox(height: 8),
-        const Text(
+        SizedBox(height: 8),
+        Text(
           'Masuk untuk melanjutkan',
           style: TextStyle(fontSize: 14, color: AppColors.grey500),
         ),

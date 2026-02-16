@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_controller.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/modules/admin/views/employee_detail_view.dart';
-import 'package:attendance_fusion/modules/admin/views/employees/add_employee_view.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_controller.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/modules/admin/views/employee_detail_view.dart';
+import 'package:sinergo_app/modules/admin/views/employees/add_employee_view.dart';
 
 class EmployeeManagerView extends GetView<AdminController> {
   const EmployeeManagerView({super.key});

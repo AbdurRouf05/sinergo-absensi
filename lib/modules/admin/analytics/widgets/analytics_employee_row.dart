@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:attendance_fusion/core/constants/app_constants.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
 
 class AnalyticsEmployeeRow extends StatelessWidget {
   final dynamic emp; // Ideally use strong type MonthlyStatsDTO

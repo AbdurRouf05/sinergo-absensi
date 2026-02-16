@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:attendance_fusion/modules/admin/controllers/live_attendance_controller.dart';
+import 'package:sinergo_app/modules/admin/controllers/live_attendance_controller.dart';
 
 class LiveAttendanceView extends StatelessWidget {
   const LiveAttendanceView({super.key});
@@ -22,17 +22,19 @@ class LiveAttendanceView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildStatCard(
-                      'Hadir', controller.stats['hadir']!, Colors.green),
+                      'Hadir', controller.stats['hadir'] ?? 0, Colors.green),
                   _buildStatCard(
-                      'Telat', controller.stats['telat']!, Colors.orange),
+                      'Telat', controller.stats['telat'] ?? 0, Colors.orange),
                   _buildStatCard(
-                      'Izin', controller.stats['izin']!, Colors.blue),
+                      'Izin', controller.stats['izin'] ?? 0, Colors.blue),
                   _buildStatCard(
-                      controller.stats['belumAbsen']! > 0 ? 'Belum' : 'Alpa',
-                      controller.stats['belumAbsen']! > 0
-                          ? controller.stats['belumAbsen']!
-                          : controller.stats['alpa']!,
-                      controller.stats['belumAbsen']! > 0
+                      (controller.stats['belumAbsen'] ?? 0) > 0
+                          ? 'Belum'
+                          : 'Alpa',
+                      (controller.stats['belumAbsen'] ?? 0) > 0
+                          ? (controller.stats['belumAbsen'] ?? 0)
+                          : (controller.stats['alpa'] ?? 0),
+                      (controller.stats['belumAbsen'] ?? 0) > 0
                           ? Colors.amber
                           : Colors.red),
                 ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationLocal item;

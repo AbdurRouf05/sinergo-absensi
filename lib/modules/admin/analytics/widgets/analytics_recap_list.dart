@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:attendance_fusion/data/models/dto/recap_row_model.dart';
+import 'package:sinergo_app/data/models/dto/recap_row_model.dart';
 import 'recap_item_card.dart';
 
 class AnalyticsRecapList extends StatelessWidget {

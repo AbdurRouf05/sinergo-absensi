@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_controller.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_controller.dart';
 
 class OvertimeRequestCard extends StatelessWidget {
   final AttendanceLocal item;

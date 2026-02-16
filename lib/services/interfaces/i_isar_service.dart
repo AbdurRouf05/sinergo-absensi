@@ -1,13 +1,13 @@
 import 'package:isar/isar.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/sync_queue_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
-import 'package:attendance_fusion/data/models/dynamic_outpost_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/sync_queue_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
+
+import 'package:sinergo_app/services/isar_service.dart';
 
 /// Interface for IsarService to enable clean mocking in tests
 abstract class IIsarService {
@@ -28,7 +28,7 @@ abstract class IIsarService {
   Future<AttendanceLocal?> getAttendanceByOdId(String id);
   Future<AttendanceLocal?> getTodayAttendance(String uid);
   Future<List<AttendanceLocal>> getAttendanceHistory(String uid,
-      {DateTime? startDate, DateTime? endDate, int? limit});
+      {DateTime? startDate, DateTime? endDate, int? limit, int offset = 0});
   Future<List<AttendanceLocal>> getUnsyncedAttendance();
   Future<void> markAttendanceSynced(int id, String sid);
   Future<void> updateCheckout(int id, DateTime time, String? path);
@@ -39,12 +39,6 @@ abstract class IIsarService {
   Stream<List<OfficeLocationLocal>> watchActiveOfficeLocations();
   Future<void> saveOfficeLocations(List<OfficeLocationLocal> l);
   Future<OfficeLocationLocal?> getOfficeLocationByOdId(String id);
-
-  // Dynamic Outpost
-  Future<int> saveDynamicOutpost(DynamicOutpostLocal outpost);
-  Future<List<DynamicOutpostLocal>> getActiveDynamicOutposts();
-  Future<void> cleanExpiredOutposts();
-  Future<void> deactivateOutpost(int id);
 
   // HR
   Future<int> saveShift(ShiftLocal s);

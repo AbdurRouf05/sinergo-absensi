@@ -1,3 +1,5 @@
+import 'package:sinergo_app/data/models/attendance_model.dart';
+
 class AdminRecapDTO {
   final int totalPresent;
   final int totalLeave;
@@ -13,6 +15,9 @@ class AdminRecapDTO {
   final int totalOvertimeMinutes; // Total MENIT lembur
   final int ganasCount; // Berapa KALI tugas luar
 
+  // NEW: AI Data Source
+  final List<AttendanceLocal> todaysAttendance;
+
   AdminRecapDTO({
     required this.totalPresent,
     required this.totalLeave,
@@ -25,5 +30,6 @@ class AdminRecapDTO {
     this.overtimeCount = 0,
     this.totalOvertimeMinutes = 0,
     this.ganasCount = 0,
+    this.todaysAttendance = const [],
   });
 }

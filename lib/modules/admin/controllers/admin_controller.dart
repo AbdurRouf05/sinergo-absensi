@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:isar/isar.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/data/repositories/interfaces/i_admin_repository.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart'; // Added
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/data/repositories/admin_recap_repository.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart'; // Added
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 import '../logic/admin_dashboard_manager.dart';
 import '../logic/admin_employee_manager.dart';
 
-import 'package:attendance_fusion/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
 
 class AdminController extends GetxController {
   final IAuthService _authService = Get.find<IAuthService>();
-  final IAdminRepository _adminRepo = Get.find<IAdminRepository>();
+  final AdminRecapRepository _recapRepo = Get.find<AdminRecapRepository>();
   final Logger _logger = Logger();
 
   late final AdminDashboardManager _dashboardManager;
@@ -39,6 +39,7 @@ class AdminController extends GetxController {
   var pendingOvertimeList = <AttendanceLocal>[].obs;
   var allOffices = <OfficeLocationLocal>[].obs;
   var allShifts = <ShiftLocal>[].obs; // NEW: For shift picker in detail view
+  var todaysAttendance = <AttendanceLocal>[].obs; // AI Insight Data source
 
   @override
   void onInit() {
@@ -63,6 +64,11 @@ class AdminController extends GetxController {
       pendingOvertimeCount.value = stats['pendingOvertime'] ?? 0;
       alpaToday.value = stats['alpaToday'] ?? 0;
       absentEmployees.assignAll(List<String>.from(stats['absentEmployees']));
+
+      // Populate attendance list for AI
+      if (stats['todaysAttendance'] != null) {
+        todaysAttendance.assignAll(stats['todaysAttendance']);
+      }
     } catch (e) {
       _logger.e("Error fetching dashboard stats", error: e);
     }
@@ -100,37 +106,72 @@ class AdminController extends GetxController {
     }
   }
 
+  // GOLDEN CODE: DO NOT MODIFY WITHOUT PERMISSION
+  // -------------------------------------------------------------------------
   Future<void> resetDevice(String userId, String userName) async {
+    // Restriction removed per user request: Admin can reset anyone including self.
+    /*
     if (userId == _authService.currentUser.value?.odId) {
-      _showSnackbar("Error", "Tidak dapat mereset akun sendiri!",
-          isError: true);
+       // ... code removed ...
       return;
     }
+    */
 
-    Get.defaultDialog(
-        title: "Reset Device ID?",
-        middleText: "User '$userName' akan bisa login di HP baru. Lanjutkan?",
-        textConfirm: "Ya, Reset",
-        textCancel: "Batal",
-        confirmTextColor: Colors.white,
-        buttonColor: Colors.red,
-        onConfirm: () async {
-          Get.back();
-          try {
-            Get.dialog(const Center(child: CircularProgressIndicator()),
-                barrierDismissible: false);
+    Get.dialog(
+      AlertDialog(
+        title: const Text("Reset Device ID?"),
+        content:
+            Text("User '$userName' akan bisa login di HP baru. Lanjutkan?"),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text("Batal"),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () async {
+              Get.back(); // Close Confirm Dialog
 
-            await _employeeManager.resetDeviceId(userId);
+              isLoading.value = true;
+              try {
+                await _employeeManager.resetDeviceId(userId);
 
-            if (Get.isDialogOpen ?? false) Get.back();
-            _showSnackbar("Sukses", "Device ID berhasil di-reset");
-            fetchEmployees();
-          } catch (e) {
-            if (Get.isDialogOpen ?? false) Get.back();
-            _showSnackbar("Error", "Gagal reset: $e", isError: true);
-          }
-        });
+                Get.dialog(
+                  AlertDialog(
+                    title: const Text("Berhasil"),
+                    content: const Text("Device ID berhasil di-reset."),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Get.back(), child: const Text("OK")),
+                    ],
+                  ),
+                );
+
+                fetchEmployees();
+              } catch (e) {
+                Get.dialog(
+                  AlertDialog(
+                    title: const Text("Gagal"),
+                    content: Text("Gagal reset: $e"),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Get.back(),
+                          child: const Text("Tutup")),
+                    ],
+                  ),
+                );
+              } finally {
+                isLoading.value = false;
+              }
+            },
+            child:
+                const Text("Ya, Reset", style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
   }
+  // -------------------------------------------------------------------------
 
   // ============ BROADCAST & MULTI-OFFICE ============
   Future<void> fetchAllOffices() async {
@@ -151,34 +192,56 @@ class AdminController extends GetxController {
     }
   }
 
+  // ============ BOARDCAST & MULTI-OFFICE (Direct PB Implementation due to Repo split) ============
+  // GOLDEN CODE: DO NOT MODIFY WITHOUT PERMISSION
+  // -------------------------------------------------------------------------
   Future<void> sendBroadcast(
       String title, String message, String target) async {
     try {
       isLoading.value = true;
-      await _adminRepo.broadcastAnnouncement(
-          title: title, message: message, target: target);
-      _showSnackbar("Sukses", "Pengumuman berhasil dikirim ke $target");
-      Get.back();
-    } catch (e) {
-      _showSnackbar("Error", "Gagal mengirim: $e", isError: true);
-    } finally {
-      isLoading.value = false;
-    }
-  }
+      // Direct PocketBase Create (Refactoring Rule: Keep Repos specific to analytics)
+      await _authService.pb.collection('notifications').create(body: {
+        'title': title,
+        'message': message,
+        'target_audience': target,
+        'created_by': _authService.currentUser.value?.id,
+      });
 
-  Future<void> updateEmployeeOffices(
-      String userId, List<String> allowedIds) async {
-    try {
-      isLoading.value = true;
-      await _adminRepo.updateEmployeeAllowedOffices(userId, allowedIds);
-      _showSnackbar("Sukses", "Akses kantor berhasil diperbarui");
-      fetchEmployees();
+      // _showSnackbar("Sukses", "Pengumuman berhasil dikirim ke $target");
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Berhasil"),
+          content: Text("Pengumuman berhasil dikirim ke $target."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.back(); // Close Dialog
+                Get.back(); // Close BottomSheet/Page
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
     } catch (e) {
-      _showSnackbar("Error", "Gagal memperbarui: $e", isError: true);
+      // _showSnackbar("Error", "Gagal mengirim: $e", isError: true);
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Gagal"),
+          content: Text("Gagal mengirim pengumuman: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
     } finally {
       isLoading.value = false;
     }
   }
+  // -------------------------------------------------------------------------
 
   // ============ SHIFT MANAGEMENT ============
   Future<void> fetchAllShifts() async {
@@ -193,16 +256,41 @@ class AdminController extends GetxController {
     }
   }
 
+  // GOLDEN CODE: DO NOT MODIFY WITHOUT PERMISSION
+  // -------------------------------------------------------------------------
   Future<void> updateEmployeeShift(String userId, String shiftOdId) async {
     try {
       isLoading.value = true;
       await _authService.pb.collection('users').update(userId, body: {
         'shift': shiftOdId,
       });
-      _showSnackbar("Sukses", "Shift karyawan berhasil diubah");
+      // _showSnackbar("Sukses", "Shift karyawan berhasil diubah");
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Berhasil"),
+          content: const Text("Shift karyawan berhasil diubah."),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
       fetchEmployees(); // Refresh
     } catch (e) {
-      _showSnackbar("Error", "Gagal mengubah shift: $e", isError: true);
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Gagal"),
+          content: Text("Gagal mengubah shift: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
     } finally {
       isLoading.value = false;
     }
@@ -219,11 +307,57 @@ class AdminController extends GetxController {
     );
   }
 
+  // GOLDEN CODE: DO NOT MODIFY WITHOUT PERMISSION
+  // -------------------------------------------------------------------------
+  Future<void> updateEmployeeOffices(
+      String userId, List<String> allowedIds) async {
+    try {
+      isLoading.value = true;
+      // FIX: Update 'office_id' (Primary) and 'allowed_offices' (Legacy)
+      // PocketBase Relation 'office_id' can be multiple.
+      await _authService.pb.collection('users').update(userId, body: {
+        'office_id': allowedIds,
+        'allowed_offices':
+            allowedIds, // Keep for legacy compatibility if needed
+      });
+      // _showSnackbar("Sukses", "Akses kantor berhasil diperbarui");
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Berhasil"),
+          content: const Text("Akses kantor berhasil diperbarui."),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      fetchEmployees();
+    } catch (e) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Gagal"),
+          content: Text("Gagal memperbarui: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  // -------------------------------------------------------------------------
+
   // ============ OVERTIME REVIEW (PHASE 7) ============
   Future<void> fetchPendingOvertime() async {
     try {
       isLoading.value = true;
-      final result = await _adminRepo.getAttendancesByStatus('pendingReview');
+      final result = await _recapRepo.getAttendancesByStatus('pendingReview');
       pendingOvertimeList.assignAll(result);
       pendingOvertimeCount.value = result.length;
     } catch (e) {
@@ -236,11 +370,13 @@ class AdminController extends GetxController {
   Future<void> approveOvertime(String id) async {
     try {
       isLoading.value = true;
-      // PHASE 6.4: Set proper approval flags
-      await _adminRepo.updateAttendanceStatus(id, 'present', extraBody: {
+      await _authService.pb.collection('attendances').update(id, body: {
+        'status': 'present',
         'is_overtime_approved': true,
-        'is_ganas_approved': true, // Also approve Ganas if applicable
+        'is_ganas_approved': true,
       });
+      // Also update local? Sync will handle it.
+
       _showSnackbar("Sukses", "Lembur/Tugas Luar berhasil disetujui");
       fetchPendingOvertime();
       fetchDashboardStats();
@@ -254,8 +390,8 @@ class AdminController extends GetxController {
   Future<void> rejectOvertime(String id) async {
     try {
       isLoading.value = true;
-      // PHASE 6.4: Clear overtime flags and zero duration on rejection
-      await _adminRepo.updateAttendanceStatus(id, 'present', extraBody: {
+      await _authService.pb.collection('attendances').update(id, body: {
+        'status': 'present',
         'is_overtime': false,
         'is_overtime_approved': false,
         'is_ganas_approved': false,

@@ -1,6 +1,6 @@
 import 'package:pocketbase/pocketbase.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
 
 class AuthProvider {
   final PocketBase _pb;

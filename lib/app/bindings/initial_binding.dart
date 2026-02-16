@@ -9,6 +9,7 @@ import '../../services/wifi_service.dart';
 import '../../services/location_service.dart';
 import '../../services/time_service.dart';
 import '../../services/sync_service.dart';
+import '../../services/connectivity_service.dart'; // Added
 import '../../services/security_service.dart';
 
 // Repositories
@@ -97,6 +98,7 @@ Future<void> initializeServices() async {
   // Phase 3: Core Orchestrators (Auth & Sync)
   await Get.putAsync<IAuthService>(() => AuthService().init(), permanent: true);
   await Get.putAsync<ISyncService>(() => SyncService().init(), permanent: true);
+  Get.put(ConnectivityService(), permanent: true); // Added ConnectivityService
 
   // Phase 4: Domain Repositories (Depends on Phase 3)
   Get.put<IUserRepository>(UserRepository(), permanent: true);

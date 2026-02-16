@@ -4,16 +4,16 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'package:attendance_fusion/services/device_service.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/services/wifi_service.dart';
-import 'package:attendance_fusion/services/time_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/services/device_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/services/wifi_service.dart';
+import 'package:sinergo_app/services/time_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/sync_queue_model.dart';
-import 'package:attendance_fusion/data/repositories/attendance_repository.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/sync_queue_model.dart';
+import 'package:sinergo_app/data/repositories/attendance_repository.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
 
 // Logic Components
 import 'logic/checkout_camera_manager.dart';

@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:intl/intl.dart';
-import 'package:attendance_fusion/data/models/dto/recap_row_model.dart';
+import 'package:sinergo_app/data/models/dto/recap_row_model.dart';
 import 'package:get/get.dart';
 
 class ExportService {
@@ -23,17 +22,14 @@ class ExportService {
     final periodStr =
         "${dateFormat.format(startDate)} - ${dateFormat.format(endDate)}";
 
-    // Load Logo
-    final logoImage =
-        await imageFromAssetBundle('assets/images/fusion_logo.png');
-
+    // No logo image — use text-based header
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(32),
         build: (pw.Context context) {
           return [
-            _buildHeader(logoImage, periodStr),
+            _buildHeader(periodStr),
             pw.SizedBox(height: 20),
             _buildTable(data),
             pw.SizedBox(height: 20),
@@ -105,7 +101,7 @@ class ExportService {
     }).join('\n');
   }
 
-  pw.Widget _buildHeader(pw.ImageProvider logo, String period) {
+  pw.Widget _buildHeader(String period) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
@@ -120,9 +116,16 @@ class ExportService {
           ],
         ),
         pw.Container(
-          height: 50,
-          width: 50,
-          child: pw.Image(logo),
+          padding: const pw.EdgeInsets.all(8),
+          decoration: pw.BoxDecoration(
+            border: pw.Border.all(color: PdfColors.blue800, width: 2),
+            borderRadius: pw.BorderRadius.circular(8),
+          ),
+          child: pw.Text("SINERGO.ID",
+              style: pw.TextStyle(
+                  fontSize: 14,
+                  fontWeight: pw.FontWeight.bold,
+                  color: PdfColors.blue800)),
         ),
       ],
     );
@@ -169,7 +172,7 @@ class ExportService {
       children: [
         pw.Divider(color: PdfColors.grey),
         pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children: [
-          pw.Text("Dicetak otomatis oleh Sistem ATTENDANCE FUSION",
+          pw.Text("Dicetak otomatis oleh Sistem SINERGO.ID",
               style:
                   const pw.TextStyle(fontSize: 10, color: PdfColors.grey600)),
           pw.Text(DateFormat('dd MMM yyyy HH:mm').format(DateTime.now()),

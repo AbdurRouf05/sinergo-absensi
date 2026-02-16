@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 class ShiftLocalRepository {
   final IsarService _isarService;

@@ -1,8 +1,8 @@
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/data/models/dto/recap_row_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/models/dto/recap_row_model.dart';
 
 class AnalyticsState {
   final int totalPresent;
@@ -26,10 +26,17 @@ class AnalyticsManager {
     required List<ShiftLocal> shifts,
     required List<AttendanceLocal> attendances,
     required List<LeaveRequestLocal> leaves,
-    required DateTime now,
+    required DateTime now, // UTC or Server Time
   }) {
     int present = 0, lateCount = 0, leaveCount = 0, alphaCount = 0;
     List<UserLocal> alphaUsers = [];
+
+    // CACHE CURRENT TIME ONCE
+    // Assume 'now' is passed as UTC or reliable server time.
+    // Convert to Office Time for comparison (Default WIB/UTC+7 if null)
+    // NOTE: Hardcoded to WIB (UTC+7) for competition context.
+    // In production, we should pass the Office Model to get the specific timezone.
+    final todayOffice = _toOfficeData(now);
 
     final shiftMap = {for (var s in shifts) s.odId: s};
     final attendanceMap = {for (var a in attendances) a.userId: a};
@@ -39,7 +46,7 @@ class AnalyticsManager {
       final shift = shiftMap[user.shiftOdId];
       if (shift == null ||
           !shift.workDays
-              .any((d) => d.toLowerCase().contains(_getDayName(now)))) {
+              .any((d) => d.toLowerCase().contains(_getDayName(todayOffice)))) {
         continue;
       }
 
@@ -52,11 +59,20 @@ class AnalyticsManager {
       } else if (leave != null) {
         leaveCount++;
       } else {
+        // ALPHA CHECK: Compare against Shift Start in Office Time
         final shiftParts = shift.startTime.split(':');
-        final shiftStart = DateTime(now.year, now.month, now.day,
-            int.parse(shiftParts[0]), int.parse(shiftParts[1]));
+        final shiftH = int.parse(shiftParts[0]);
+        final shiftM = int.parse(shiftParts[1]);
 
-        if (now.isAfter(shiftStart)) {
+        // Setup Shift Start DateTime in Office Timezone
+        final shiftStart = DateTime(todayOffice.year, todayOffice.month,
+            todayOffice.day, shiftH, shiftM);
+
+        // buffer 30 mins before counting as Alpha in dashboard?
+        // Or strict? Requirement says "Late" logic.
+        // If now > shiftStart, they are Late (if checkin) or Alpha (if not).
+
+        if (todayOffice.isAfter(shiftStart)) {
           alphaCount++;
           alphaUsers.add(user);
         }
@@ -81,6 +97,7 @@ class AnalyticsManager {
     required DateTime endDate,
   }) {
     final shiftMap = {for (var s in shifts) s.odId: s};
+    final nowOffice = _toOfficeData(DateTime.now());
 
     return users.map((user) {
       final userAtts = allAttendances.where((a) => a.userId == user.odId);
@@ -93,7 +110,7 @@ class AnalyticsManager {
           overtimeMin = 0,
           alphaCount = 0;
 
-      // 1. Calculate Presence Stats (from Attendance Records)
+      // 1. Calculate Presence Stats
       for (var att in userAtts) {
         present++;
         if (att.status == AttendanceStatus.late) {
@@ -106,61 +123,62 @@ class AnalyticsManager {
         }
       }
 
-      // 2. Calculate Historical Alpha (Loop Date Range)
+      // 2. Calculate Historical Alpha
       final shift = shiftMap[user.shiftOdId];
       if (shift != null) {
-        // Iterate from start to end (Inclusive)
         final days = endDate.difference(startDate).inDays + 1;
         for (var i = 0; i < days; i++) {
           final d = startDate.add(Duration(days: i));
-          // Skip Future
-          if (d.isAfter(DateTime.now())) continue;
 
-          // Check if Work Day
+          // Skip Future (Compare d with nowOffice date part)
+          if (d.year > nowOffice.year ||
+              (d.year == nowOffice.year && d.month > nowOffice.month) ||
+              (d.year == nowOffice.year &&
+                  d.month == nowOffice.month &&
+                  d.day > nowOffice.day)) {
+            continue;
+          }
+
           final dayName = _getDayName(d);
           if (!shift.workDays.any((wd) => wd.toLowerCase() == dayName)) {
             continue;
           }
 
-          // Check if Present (Attendance exists on this day)
           final isPresent = userAtts.any((a) {
-            final aDate = a.checkInTime;
+            // Compare purely numeric Date YMD
+            final aDate =
+                a.checkInTime.toLocal(); // Convert to local for day matching?
+            // Ideally we use UTC YMD if stored as UTC date.
+            // But checkInTime is DateTime.
             return aDate.year == d.year &&
                 aDate.month == d.month &&
                 aDate.day == d.day;
           });
           if (isPresent) continue;
 
-          // Check if Leave (Date falls within leave range)
           final isLeave = userLeaves.any((l) {
             if (l.startDate == null || l.endDate == null) return false;
-
-            // Compare Date only (strip time)
-            final start = DateTime(
-                l.startDate!.year, l.startDate!.month, l.startDate!.day);
-            final end =
-                DateTime(l.endDate!.year, l.endDate!.month, l.endDate!.day);
-            final curr = DateTime(d.year, d.month, d.day);
-            return (curr.isAtSameMomentAs(start) || curr.isAfter(start)) &&
-                (curr.isAtSameMomentAs(end) || curr.isBefore(end));
+            final start = l.startDate!;
+            final end = l.endDate!;
+            // Check overlapping logic... simplified for direct day match
+            return d.compareTo(start) >= 0 && d.compareTo(end) <= 0;
           });
           if (isLeave) continue;
 
-          // If Today: Check shift start time logic (Potential Alpha vs Real Alpha)
-          if (d.year == DateTime.now().year &&
-              d.month == DateTime.now().month &&
-              d.day == DateTime.now().day) {
+          // If Today: Check shift start time logic
+          if (d.year == nowOffice.year &&
+              d.month == nowOffice.month &&
+              d.day == nowOffice.day) {
             final shiftParts = shift.startTime.split(':');
             final h = int.parse(shiftParts[0]);
             final m = int.parse(shiftParts[1]);
             final shiftStart = DateTime(d.year, d.month, d.day, h, m);
-            if (DateTime.now().isBefore(shiftStart)) {
-              // Not yet alpha (shift hasn't started)
-              continue;
+
+            if (nowOffice.isBefore(shiftStart)) {
+              continue; // Not yet alpha
             }
           }
 
-          // If we reach here -> ALPHA
           alphaCount++;
         }
       }
@@ -179,6 +197,15 @@ class AnalyticsManager {
     }).toList();
   }
 
+  // --- HELPERS ---
+
+  /// Convert any DateTime to fixed Office Timezone (UTC+7 for now)
+  static DateTime _toOfficeData(DateTime d) {
+    // If d is UTC, add 7 hours.
+    // Use explicit offset logic.
+    return d.toUtc().add(const Duration(hours: 7));
+  }
+
   static String _getDayName(DateTime date) {
     const days = [
       'senin',
@@ -189,6 +216,7 @@ class AnalyticsManager {
       'sabtu',
       'minggu'
     ];
+    // Weekday 1=Mon, 7=Sun
     return days[date.weekday - 1];
   }
 }

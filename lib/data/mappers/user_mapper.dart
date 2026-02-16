@@ -1,9 +1,9 @@
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 class UserMapper {
   static UserLocal mapRecordToUser(RecordModel record, String deviceId,

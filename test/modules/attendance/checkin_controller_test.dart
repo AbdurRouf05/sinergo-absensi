@@ -6,32 +6,32 @@ import 'package:geolocator/geolocator.dart';
 import 'package:isar/isar.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-import 'package:attendance_fusion/modules/attendance/checkin/checkin_controller.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/logic/checkin_dialog_helper.dart'; // Added for test mode
-import 'package:attendance_fusion/services/device_service.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/services/wifi_service.dart';
-import 'package:attendance_fusion/services/time_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/data/repositories/attendance_repository.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/logic/checkin_status_helper.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart'; // NEW
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
-import 'package:attendance_fusion/data/models/sync_queue_model.dart';
-import 'package:attendance_fusion/data/models/dynamic_outpost_model.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/logic/office_selection_manager.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/logic/checkin_location_manager.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/logic/ganas_manager.dart';
-import 'package:attendance_fusion/modules/attendance/checkin/logic/overtime_manager.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
-import 'package:attendance_fusion/services/permission_service.dart';
-import 'package:attendance_fusion/services/security_service.dart';
+import 'package:sinergo_app/modules/attendance/checkin/checkin_controller.dart';
+import 'package:sinergo_app/modules/attendance/checkin/logic/checkin_dialog_helper.dart'; // Added for test mode
+import 'package:sinergo_app/services/device_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/services/wifi_service.dart';
+import 'package:sinergo_app/services/time_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/data/repositories/attendance_repository.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/modules/attendance/checkin/logic/checkin_status_helper.dart';
+import 'package:sinergo_app/data/models/shift_model.dart'; // NEW
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
+import 'package:sinergo_app/data/models/sync_queue_model.dart';
+
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/modules/attendance/checkin/logic/office_selection_manager.dart';
+import 'package:sinergo_app/modules/attendance/checkin/logic/checkin_location_manager.dart';
+import 'package:sinergo_app/modules/attendance/checkin/logic/ganas_manager.dart';
+import 'package:sinergo_app/modules/attendance/checkin/logic/overtime_manager.dart';
+import 'package:sinergo_app/services/sync_service.dart';
+import 'package:sinergo_app/services/permission_service.dart';
+import 'package:sinergo_app/services/security_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 typedef PureMockRepo = PureMockAttendanceRepository;
@@ -80,6 +80,10 @@ class PureMockLocationService implements ILocationService {
   void startLocationUpdates({required Function(Position) onUpdate}) {}
   @override
   void stopLocationUpdates() {}
+
+  @override
+  Stream<Position> getPositionStream() =>
+      const Stream.empty(); // Mock implementation
 
   @override
   Future<bool> detectMockLocation(Position position) async => position.isMocked;
@@ -167,7 +171,10 @@ class PureMockIsarService implements IIsarService {
       mockTodayAttendance;
   @override
   Future<List<AttendanceLocal>> getAttendanceHistory(String uid,
-          {DateTime? startDate, DateTime? endDate, int? limit}) async =>
+          {DateTime? startDate,
+          DateTime? endDate,
+          int? limit,
+          int offset = 0}) async =>
       [];
   @override
   Future<List<AttendanceLocal>> getUnsyncedAttendance() async => [];
@@ -220,15 +227,6 @@ class PureMockIsarService implements IIsarService {
   Future<int> cleanupSyncQueue(Duration d) async => 0;
   @override
   Future<Map<SyncStatus, int>> getSyncQueueStats() async => {};
-
-  @override
-  Future<int> saveDynamicOutpost(DynamicOutpostLocal outpost) async => 1;
-  @override
-  Future<List<DynamicOutpostLocal>> getActiveDynamicOutposts() async => [];
-  @override
-  Future<void> cleanExpiredOutposts() async {}
-  @override
-  Future<void> deactivateOutpost(int id) async {}
 
   @override
   Future<void> clearAllData() async {}

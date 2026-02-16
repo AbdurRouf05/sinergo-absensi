@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
 
 class EmployeeCardItem extends StatelessWidget {
   final UserLocal user;

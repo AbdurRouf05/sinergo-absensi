@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/core/constants/app_constants.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
 import '../logic/office_selection_manager.dart';
 
 class OfficeSelectorDropdown extends StatelessWidget {

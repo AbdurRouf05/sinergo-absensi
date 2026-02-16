@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/device_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/device_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 

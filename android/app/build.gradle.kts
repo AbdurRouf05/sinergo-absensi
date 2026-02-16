@@ -14,7 +14,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.attendancefusion.app"
+    namespace = "id.sinergo.app"
     // KITA KUNCI DI 35 (Android 15).
     compileSdk = 35
     buildToolsVersion = "35.0.0"
@@ -22,12 +22,14 @@ android {
     ndkVersion = "26.1.10909125"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        // KEEPING DESUGARING FOR NOTIFICATIONS
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
 
     sourceSets {
@@ -44,11 +46,12 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.attendancefusion.app"
+        applicationId = "id.sinergo.app"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -67,6 +70,10 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 }
 
 flutter {

@@ -1,6 +1,6 @@
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 /// Result of check-in status calculation.
 /// Contains both the attendance status AND the raw late minutes (Fairness Logic).

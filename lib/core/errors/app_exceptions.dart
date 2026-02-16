@@ -1,4 +1,4 @@
-/// Custom exceptions for ATTENDANCE FUSION application
+/// Custom exceptions for SINERGO.ID application
 library;
 
 /// Base exception class for all app exceptions

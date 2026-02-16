@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_controller.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_controller.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
 
 class EmployeeDetailView extends StatefulWidget {
   final UserLocal employee;
@@ -107,9 +107,9 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
   }
 
   // ============ SAVE ALL CHANGES ============
-  void _saveChanges() {
+  Future<void> _saveChanges() async {
     // 1. Save office changes
-    controller.updateEmployeeOffices(
+    await controller.updateEmployeeOffices(
       widget.employee.odId,
       selectedOfficeIds,
     );
@@ -117,11 +117,13 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
     // 2. Save shift change (if changed)
     if (selectedShiftOdId != null &&
         selectedShiftOdId != widget.employee.shiftOdId) {
-      controller.updateEmployeeShift(
+      await controller.updateEmployeeShift(
         widget.employee.odId,
         selectedShiftOdId!,
       );
     }
+
+    // Feedback handled by controller snackbars
   }
 
   // ============ HEADER INFO ============

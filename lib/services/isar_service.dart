@@ -3,26 +3,26 @@ import 'package:isar/isar.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/sync_queue_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/data/models/daily_recap_model.dart';
-import 'package:attendance_fusion/data/models/notification_model.dart';
-import 'package:attendance_fusion/data/models/dynamic_outpost_model.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/data/repositories/local/user_local_repository.dart';
-import 'package:attendance_fusion/data/repositories/local/attendance_local_repository.dart';
-import 'package:attendance_fusion/data/repositories/local/office_local_repository.dart';
-import 'package:attendance_fusion/data/repositories/local/hr_local_repository.dart';
-import 'package:attendance_fusion/data/repositories/local/sync_queue_repository.dart';
-import 'package:attendance_fusion/data/repositories/local/notification_local_repository.dart';
-import 'package:attendance_fusion/data/repositories/local/dynamic_outpost_local_repository.dart';
-import 'package:attendance_fusion/services/interfaces/i_isar_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/sync_queue_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/models/daily_recap_model.dart';
+import 'package:sinergo_app/data/models/notification_model.dart';
 
-export 'package:attendance_fusion/services/interfaces/i_isar_service.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/data/repositories/local/user_local_repository.dart';
+import 'package:sinergo_app/data/repositories/local/attendance_local_repository.dart';
+import 'package:sinergo_app/data/repositories/local/office_local_repository.dart';
+import 'package:sinergo_app/data/repositories/local/hr_local_repository.dart';
+import 'package:sinergo_app/data/repositories/local/sync_queue_repository.dart';
+import 'package:sinergo_app/data/repositories/local/notification_local_repository.dart';
+
+import 'package:sinergo_app/services/interfaces/i_isar_service.dart';
+
+export 'package:sinergo_app/services/interfaces/i_isar_service.dart';
 
 /// IsarService - Core DB Provider & Facade
 class IsarService extends GetxService implements IIsarService {
@@ -39,7 +39,6 @@ class IsarService extends GetxService implements IIsarService {
   late LeaveLocalRepository leaveRepo;
   late SyncQueueRepository syncRepo;
   late NotificationLocalRepository notificationRepo;
-  late DynamicOutpostLocalRepository dynamicOutpostRepo;
 
   @override
   Isar get isar {
@@ -63,10 +62,9 @@ class IsarService extends GetxService implements IIsarService {
           LeaveRequestLocalSchema,
           DailyRecapLocalSchema,
           NotificationLocalSchema,
-          DynamicOutpostLocalSchema,
         ],
         directory: dir.path,
-        name: 'attendance_fusion',
+        name: 'sinergo_app',
         inspector: false,
       );
 
@@ -88,7 +86,6 @@ class IsarService extends GetxService implements IIsarService {
     leaveRepo = LeaveLocalRepository(this);
     syncRepo = SyncQueueRepository(this);
     notificationRepo = NotificationLocalRepository(this);
-    dynamicOutpostRepo = DynamicOutpostLocalRepository(this);
   }
 
   // --- FACADE METHODS (Delegates) ---
@@ -122,9 +119,12 @@ class IsarService extends GetxService implements IIsarService {
       attendanceRepo.getTodayAttendance(uid);
   @override
   Future<List<AttendanceLocal>> getAttendanceHistory(String uid,
-          {DateTime? startDate, DateTime? endDate, int? limit}) =>
+          {DateTime? startDate,
+          DateTime? endDate,
+          int? limit,
+          int offset = 0}) =>
       attendanceRepo.getAttendanceHistory(uid,
-          startDate: startDate, endDate: endDate, limit: limit);
+          startDate: startDate, endDate: endDate, limit: limit, offset: offset);
   @override
   Future<List<AttendanceLocal>> getUnsyncedAttendance() =>
       attendanceRepo.getUnsyncedAttendance();
@@ -151,23 +151,6 @@ class IsarService extends GetxService implements IIsarService {
   @override
   Future<OfficeLocationLocal?> getOfficeLocationByOdId(String id) =>
       officeRepo.getOfficeLocationByOdId(id);
-
-  // Dynamic Outpost
-  @override
-  Future<int> saveDynamicOutpost(DynamicOutpostLocal outpost) =>
-      dynamicOutpostRepo.saveDynamicOutpost(outpost);
-
-  @override
-  Future<List<DynamicOutpostLocal>> getActiveDynamicOutposts() =>
-      dynamicOutpostRepo.getActiveDynamicOutposts();
-
-  @override
-  Future<void> cleanExpiredOutposts() =>
-      dynamicOutpostRepo.cleanExpiredOutposts();
-
-  @override
-  Future<void> deactivateOutpost(int id) =>
-      dynamicOutpostRepo.deactivateOutpost(id);
 
   // HR
   @override

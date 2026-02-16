@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:attendance_fusion/app/routes/app_routes.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/data/repositories/leave_repository.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/app/routes/app_routes.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/repositories/leave_repository.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 
 import 'logic/leave_attachment_manager.dart';
 
@@ -55,8 +55,15 @@ class LeaveController extends GetxController {
   }
 
   // ============ MAIN SUBMIT FUNCTION ============
+  // GOLDEN CODE: SUBMIT LOGIC FIXED (FOCUS & NAV)
+  // -------------------------------------------------------------------------
   Future<void> submit() async {
-    // 1. Validations
+    // 1. Force Close Keyboard FIRST to prevent "ping-pong" effect
+    FocusManager.instance.primaryFocus?.unfocus();
+    await Future.delayed(
+        const Duration(milliseconds: 300)); // Wait for keyboard to close
+
+    // 2. Validations
     if (reason.value.trim().isEmpty) {
       _showErrorDialog("Error", "Mohon isi alasan pengajuan!");
       return;
@@ -73,7 +80,8 @@ class LeaveController extends GetxController {
       return;
     }
 
-    // 2. Loading State
+    // 3. Loading State
+    isLoading.value = true; // Use reactive variable for UI loading state first
     Get.dialog(
       const Center(child: CircularProgressIndicator()),
       barrierDismissible: false,
@@ -93,45 +101,67 @@ class LeaveController extends GetxController {
         ..localAttachmentPath = attachmentManager.selectedFile.value?.path
         ..isSynced = false;
 
-      // 3. API Execution
+      // 4. API Execution
       await _leaveRepository.submitLeaveRequest(request,
           attachment: attachmentManager.selectedFile.value);
 
-      // 4. Success Flow
-      Get.back(); // Close Loading Dialog
+      // 5. Success Flow
+      if (Get.isDialogOpen ?? false) Get.back(); // Close Loading Dialog
 
-      Get.defaultDialog(
-          title: "Berhasil",
-          middleText: "Pengajuan izin Anda telah dikirim.",
-          textConfirm: "OK",
-          confirmTextColor: Colors.white,
-          buttonColor: Colors.green,
-          barrierDismissible: false,
-          onConfirm: () {
-            clearForm();
-            Get.back(); // Close dialog
-            Get.offAllNamed(AppRoutes.home); // Navigate to Home
-          });
-    } catch (e) {
-      // 5. Error Flow
-      Get.back(); // Close Loading Dialog if open
-
-      Get.defaultDialog(
-        title: "Gagal",
-        middleText: "Terjadi kesalahan: $e",
-        textConfirm: "OK",
-        confirmTextColor: Colors.white,
-        buttonColor: Colors.red,
-        onConfirm: () => Get.back(),
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Berhasil"),
+          content: const Text("Pengajuan izin Anda telah dikirim."),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              onPressed: () {
+                // Determine navigation stack safety
+                if (Get.isDialogOpen ?? false)
+                  Get.back(); // Close Success Dialog
+                clearForm();
+                Get.offAllNamed(AppRoutes.home); // Reset to Home
+              },
+              child: const Text("OK", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
       );
+    } catch (e) {
+      // 6. Error Flow
+      if (Get.isDialogOpen ?? false) Get.back(); // Close Loading Dialog
+
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Gagal"),
+          content: Text("Terjadi kesalahan: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
 
   void _showErrorDialog(String title, String message) {
-    Get.defaultDialog(
-        title: title,
-        middleText: message,
-        textConfirm: "OK",
-        onConfirm: () => Get.back());
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
   }
+  // -------------------------------------------------------------------------
 }

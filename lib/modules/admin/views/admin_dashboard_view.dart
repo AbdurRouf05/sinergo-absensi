@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_controller.dart';
-import 'package:attendance_fusion/modules/admin/views/leave_approval_view.dart';
-import 'package:attendance_fusion/modules/admin/views/employee_manager_view.dart';
-import 'package:attendance_fusion/modules/admin/views/live_attendance_view.dart';
-import 'package:attendance_fusion/modules/admin/controllers/live_attendance_controller.dart';
-import 'package:attendance_fusion/app/theme/app_colors.dart';
-import 'package:attendance_fusion/modules/admin/analytics/analytics_view.dart';
-import 'package:attendance_fusion/modules/admin/analytics/analytics_binding.dart';
-import 'package:attendance_fusion/modules/admin/views/admin_broadcast_view.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_broadcast_controller.dart';
-import 'package:attendance_fusion/modules/admin/views/posko_view.dart';
-import 'package:attendance_fusion/modules/admin/controllers/posko_controller.dart';
-import 'package:attendance_fusion/modules/admin/views/overtime_approval_view.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_controller.dart';
+import 'package:sinergo_app/modules/admin/views/leave_approval_view.dart';
+import 'package:sinergo_app/modules/admin/views/employee_manager_view.dart';
+import 'package:sinergo_app/modules/admin/views/live_attendance_view.dart';
+import 'package:sinergo_app/modules/admin/controllers/live_attendance_controller.dart';
+import 'package:sinergo_app/app/theme/app_colors.dart';
+import 'package:sinergo_app/modules/admin/analytics/analytics_view.dart';
+import 'package:sinergo_app/modules/admin/analytics/analytics_binding.dart';
+import 'package:sinergo_app/modules/admin/views/admin_broadcast_view.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_broadcast_controller.dart';
+import 'package:sinergo_app/modules/admin/views/posko_view.dart';
+import 'package:sinergo_app/modules/admin/controllers/posko_controller.dart';
+import 'package:sinergo_app/modules/admin/views/overtime_approval_view.dart';
+import 'package:sinergo_app/modules/admin/dashboard/widgets/smart_insight_card.dart';
 
 class AdminDashboardView extends GetView<AdminController> {
   const AdminDashboardView({super.key});
@@ -39,6 +40,11 @@ class AdminDashboardView extends GetView<AdminController> {
           child: Column(
             children: [
               // FIXED HEADER (Scrollable List below)
+              const SizedBox(height: 12),
+
+              // AI INSIGHT CARD (New Feature)
+              const SmartInsightCard(),
+
               const SizedBox(height: 12),
 
               // LIVE MONITORING SECTION (Takes available space)
@@ -112,8 +118,8 @@ class AdminDashboardView extends GetView<AdminController> {
                     }),
                     const SizedBox(height: 12),
                     _buildMenuCard(
-                        "Broadcast Titik Absen",
-                        "Buat Posko Sementara",
+                        "Manajemen Lokasi Kantor",
+                        "Tambah/Hapus Kantor Cabang",
                         Icons.settings_input_antenna,
                         Colors.blueAccent, () {
                       Get.to(() => const PoskoView(),

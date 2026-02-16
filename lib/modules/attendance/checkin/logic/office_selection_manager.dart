@@ -1,10 +1,10 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/core/constants/app_constants.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/core/constants/app_constants.dart';
 
 class OfficeSelectionManager extends GetxController {
   final IIsarService _isar = Get.find<IIsarService>();
@@ -49,19 +49,6 @@ class OfficeSelectionManager extends GetxController {
       // SECURITY FIX: 2026-02-14
       // Removed permissive loop that added ALL offices to the list.
       // Now strictly respects allowed_office_ids + officeOdId.
-    }
-
-    // 1.5. INJECT DYNAMIC OUTPOSTS (Titik Admin)
-    final dynamicOutposts = await _isar.getActiveDynamicOutposts();
-    for (var outpost in dynamicOutposts) {
-      filteredOffices.add(
-        OfficeLocationLocal()
-          ..odId = 'outpost_${outpost.id}' // Local prefix
-          ..name = '📡 ${outpost.name} (ADMIN)'
-          ..lat = outpost.lat
-          ..lng = outpost.lng
-          ..radius = outpost.radius,
-      );
     }
 
     // 2. INJECT GANAS VIRTUAL OFFICE

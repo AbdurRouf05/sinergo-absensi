@@ -1,7 +1,7 @@
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 
 class ProfileDataManager {
   final Logger _logger = Logger();

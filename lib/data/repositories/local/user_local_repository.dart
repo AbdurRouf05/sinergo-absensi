@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
 
 class UserLocalRepository {
   final IsarService _isarService;

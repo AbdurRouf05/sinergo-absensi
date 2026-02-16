@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import 'package:attendance_fusion/data/models/attendance_model.dart';
-import 'package:attendance_fusion/data/models/sync_queue_model.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/data/models/attendance_model.dart';
+import 'package:sinergo_app/data/models/sync_queue_model.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 
 /// Interface for AttendanceRepository to enable clean mocking in tests

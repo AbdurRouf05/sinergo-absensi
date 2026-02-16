@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:attendance_fusion/data/repositories/interfaces/i_admin_repository.dart';
-import 'package:attendance_fusion/data/models/leave_request_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
+import 'package:sinergo_app/data/repositories/interfaces/i_admin_repository.dart';
+import 'package:sinergo_app/data/models/leave_request_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
 import 'package:intl/intl.dart';
 
 class LeaveApprovalController extends GetxController {

@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/core/utils/geo_utils.dart';
-import 'package:attendance_fusion/services/location/mock_location_guard.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/core/utils/geo_utils.dart';
+import 'package:sinergo_app/services/location/mock_location_guard.dart';
 
 /// Interface for LocationService to enable clean mocking in tests
 abstract class ILocationService {
@@ -18,6 +18,7 @@ abstract class ILocationService {
   Future<Position?> getCurrentPosition({bool forceRefresh = false});
   void startLocationUpdates({required Function(Position) onUpdate});
   void stopLocationUpdates();
+  Stream<Position> getPositionStream(); // Added to interface
   Future<bool> detectMockLocation(Position position);
   double calculateDistance(double lat1, double lng1, double lat2, double lng2);
   bool isWithinRadius(double lat, double lng, double targetLat,
@@ -115,6 +116,7 @@ class LocationService extends GetxService implements ILocationService {
     _positionSubscription = null;
   }
 
+  @override
   Stream<Position> getPositionStream() {
     return Geolocator.getPositionStream(locationSettings: _locationSettings)
         .asyncMap((position) async {

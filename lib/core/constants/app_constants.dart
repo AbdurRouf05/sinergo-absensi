@@ -1,4 +1,4 @@
-/// Application-wide constants for ATTENDANCE FUSION
+/// Application-wide constants for SINERGO.ID
 library;
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,7 +7,7 @@ class AppConstants {
   AppConstants._();
 
   // App Info
-  static const String appName = 'Attendance Fusion';
+  static const String appName = 'Sinergo.id';
   static const String appVersion = '0.1.0';
 
   // PocketBase Configuration

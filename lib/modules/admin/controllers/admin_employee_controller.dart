@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-import 'package:attendance_fusion/data/models/office_location_model.dart';
-import 'package:attendance_fusion/data/models/shift_model.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/modules/admin/controllers/admin_controller.dart';
+import 'package:sinergo_app/data/models/office_location_model.dart';
+import 'package:sinergo_app/data/models/shift_model.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/modules/admin/controllers/admin_controller.dart';
 
 class AdminEmployeeController extends GetxController {
   final IIsarService _isarService = Get.find<IIsarService>();
@@ -67,37 +67,57 @@ class AdminEmployeeController extends GetxController {
     }
   }
 
+  // GOLDEN CODE: DO NOT MODIFY WITHOUT PERMISSION
+  // -------------------------------------------------------------------------
   Future<void> createEmployee() async {
+    // 1. Validate with Dialogs
     if (!_validateInput()) return;
 
     try {
       isLoading.value = true;
+
+      // 2. Prepare Data
       final body = <String, dynamic>{
         "name": nameController.text.trim(),
         "email": emailController.text.trim(),
         "emailVisibility": true,
         "password": passwordController.text,
         "passwordConfirm": passwordController.text,
-        "role": selectedRole.value.name, // 'employee', 'admin', 'hr'
+        "role": selectedRole.value.name,
         "office_id": [selectedOffice.value!.odId], // Multiple Relation
+        "allowed_offices": [selectedOffice.value!.odId], // Legacy Compatibility
         "shift": selectedShift.value!.odId,
-        "department": "-", // Default
-        // "verified": true, // REMOVED: Causes 400 Error on Create
+        "department": "-",
+        // "verified": true, // REMOVED: PocketBase blocks setting this on create
       };
 
-      // Create in PocketBase
-      // Note: This requires the logged-in user to be an Admin
+      // 3. Create in PocketBase
       await _authService.pb.collection('users').create(body: body);
 
-      Get.snackbar("Sukses", "Karyawan berhasil ditambahkan",
-          backgroundColor: Colors.green, colorText: Colors.white);
+      // 4. Success Dialog & Clear Form
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Berhasil"),
+          content:
+              Text("Karyawan '${nameController.text}' berhasil ditambahkan."),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              onPressed: () {
+                Get.back(); // Close Dialog
+                _clearForm(); // Clear form for next entry
 
-      // Refresh Admin List
-      if (Get.isRegistered<AdminController>()) {
-        Get.find<AdminController>().refreshEmployees();
-      }
-
-      Get.back(); // Close form
+                // Refresh Admin List in background
+                if (Get.isRegistered<AdminController>()) {
+                  Get.find<AdminController>().fetchEmployees();
+                }
+              },
+              child: const Text("Oke", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
     } on ClientException catch (e) {
       debugPrint("PB ClientException: ${e.response}");
       var msg = e.originalError?.toString() ??
@@ -108,7 +128,6 @@ class AdminEmployeeController extends GetxController {
       if (e.response['data'] is Map) {
         final data = e.response['data'] as Map;
         if (data.isNotEmpty) {
-          // e.g. "email": {"code": "validation_invalid_email", "message": "Must be valid email"}
           final firstKey = data.keys.first;
           final errDetail = data[firstKey];
           if (errDetail is Map && errDetail['message'] != null) {
@@ -117,47 +136,80 @@ class AdminEmployeeController extends GetxController {
         }
       }
 
-      Get.snackbar("Gagal", "Error PocketBase: $msg",
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 5));
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Gagal"),
+          content: Text("Error PocketBase: $msg"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
     } catch (e) {
       debugPrint("General Create Employee Error: $e");
-      Get.snackbar("Error", "Terjadi kesalahan: $e",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Error"),
+          content: Text("Terjadi kesalahan: $e"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("Tutup"),
+            ),
+          ],
+        ),
+      );
     } finally {
       isLoading.value = false;
     }
   }
 
+  void _clearForm() {
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    // Reset selections to defaults if available, or keep last selection?
+    // User said "cukup kosongkan biasa", usually means text fields.
+    // Keeping office/shift might be helpful for bulk entry, but let's safe reset.
+    // Actually, widespread practice for "Add Another" is keep Dropdowns, clear Text.
+    // Let's clear Text only as it's less annoying.
+  }
+
   bool _validateInput() {
+    String? errorMsg;
     if (nameController.text.length < 3) {
-      Get.snackbar("Error", "Nama minimal 3 karakter",
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return false;
+      errorMsg = "Nama minimal 3 karakter";
+    } else if (!GetUtils.isEmail(emailController.text)) {
+      errorMsg = "Email tidak valid";
+    } else if (passwordController.text.length < 8) {
+      errorMsg = "Password minimal 8 karakter";
+    } else if (selectedOffice.value == null) {
+      errorMsg = "Pilih Kantor";
+    } else if (selectedShift.value == null) {
+      errorMsg = "Pilih Shift";
     }
-    if (!GetUtils.isEmail(emailController.text)) {
-      Get.snackbar("Error", "Email tidak valid",
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return false;
-    }
-    if (passwordController.text.length < 8) {
-      Get.snackbar("Error", "Password minimal 8 karakter",
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return false;
-    }
-    if (selectedOffice.value == null) {
-      Get.snackbar("Error", "Pilih Kantor",
-          backgroundColor: Colors.red, colorText: Colors.white);
-      return false;
-    }
-    if (selectedShift.value == null) {
-      Get.snackbar("Error", "Pilih Shift",
-          backgroundColor: Colors.red, colorText: Colors.white);
+
+    if (errorMsg != null) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Data Tidak Valid"),
+          content: Text(errorMsg),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
       return false;
     }
     return true;
   }
+  // -------------------------------------------------------------------------
 
   @override
   void onClose() {

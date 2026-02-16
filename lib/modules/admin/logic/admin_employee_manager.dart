@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
-import 'package:attendance_fusion/services/auth_service.dart';
-import 'package:attendance_fusion/services/isar_service.dart';
-import 'package:attendance_fusion/services/sync_service.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
+import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/isar_service.dart';
+import 'package:sinergo_app/services/sync_service.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
 import 'package:isar/isar.dart';
 
 class AdminEmployeeManager {
@@ -27,7 +27,7 @@ class AdminEmployeeManager {
   Future<void> resetDeviceId(String userId) async {
     // userId is PocketBase ID (odId)
     await _authService.pb.collection('users').update(userId, body: {
-      'registered_device_id': '', // Clear Device ID
+      'registered_device_id': null, // Clear Device ID (Use null to unset)
     });
 
     // FIX: Update local DB directly instead of full syncMasterData (faster)

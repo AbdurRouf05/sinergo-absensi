@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
-import 'package:attendance_fusion/services/device_service.dart';
+import 'package:sinergo_app/services/device_service.dart';
 
 class MockDeviceService extends Mock implements DeviceService {
   @override

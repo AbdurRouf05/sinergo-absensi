@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:attendance_fusion/core/errors/app_exceptions.dart';
-import 'package:attendance_fusion/services/device/device_fingerprint_manager.dart';
-import 'package:attendance_fusion/services/device/device_id_manager.dart';
+import 'package:sinergo_app/core/errors/app_exceptions.dart';
+import 'package:sinergo_app/services/device/device_fingerprint_manager.dart';
+import 'package:sinergo_app/services/device/device_id_manager.dart';
 
 /// Interface for DeviceService to enable clean mocking in tests
 abstract class IDeviceService {

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:attendance_fusion/services/location_service.dart';
-import 'package:attendance_fusion/services/time_service.dart';
-import 'package:attendance_fusion/services/wifi_service.dart';
+import 'package:sinergo_app/services/location_service.dart';
+import 'package:sinergo_app/services/time_service.dart';
+import 'package:sinergo_app/services/wifi_service.dart';
 
 class HomeDiagnosticsManager {
   final IWifiService _wifiService;

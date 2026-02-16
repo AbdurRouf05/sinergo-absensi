@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:attendance_fusion/app/routes/app_routes.dart';
-import 'package:attendance_fusion/data/models/user_model.dart';
-import 'package:attendance_fusion/data/repositories/user_repository.dart';
-import 'package:attendance_fusion/services/auth_service.dart';
+import 'package:sinergo_app/app/routes/app_routes.dart';
+import 'package:sinergo_app/data/models/user_model.dart';
+import 'package:sinergo_app/data/repositories/user_repository.dart';
+import 'package:sinergo_app/services/auth_service.dart';
 
 import 'edit_profile_view.dart';
 import 'logic/profile_data_manager.dart';
