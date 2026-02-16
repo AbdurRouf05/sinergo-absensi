@@ -59,3 +59,11 @@ docs/*.jpg
 docs/*.jpeg
 docs/*.gif
 docs/*.webp
+
+# Temporary Analysis Files
+analysis.txt
+analysis_smart.txt
+analyze_output.txt
+
+# Schema Dumps
+pb_schema*.json

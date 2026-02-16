@@ -1,7 +1,0 @@
-Analyzing AttendanceFusion...                                   
-
-   info - Use 'const' with the constructor to improve performance - lib\core\widgets\offline_banner.dart:24:16 - prefer_const_constructors
-   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\core\widgets\offline_banner.dart:26:21 - prefer_const_literals_to_create_immutables
-   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\modules\admin\views\posko_view.dart:93:36 - deprecated_member_use
-   info - 'backgroundColor' is deprecated and shouldn't be used. Prefer `MapOptions.backgroundColor`. This property has been removed simplify interaction when using multiple `TileLayer`s. This property is deprecated since v6 - lib\modules\admin\views\posko_view.dart:143:35 - deprecated_member_use
-
