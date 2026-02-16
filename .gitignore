@@ -47,7 +47,17 @@ app.*.map.json
 # Sensitivity & Configuration
 **/android/key.properties
 **/android/local.properties
+**/android/key.properties
+**/android/local.properties
 .env
+.env.test
+
+# Logs
+logs/
+
+# Sensitive/Internal Documentation
+docs/migrasi/MIGRATION_CONTEXT.md
+docs/migrasi/ONBOARDING_REKAN.md
 
 
 # Private Documentation
