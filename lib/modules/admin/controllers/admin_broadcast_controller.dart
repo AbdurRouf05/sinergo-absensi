@@ -19,6 +19,20 @@ class AdminBroadcastController extends GetxController {
   void onInit() {
     super.onInit();
     fetchUsers();
+
+    // 🚀 Actionable Copilot Prefill (Enhanced)
+    if (Get.arguments != null && Get.arguments is Map) {
+      final args = Get.arguments as Map;
+      if (args.containsKey('prefill')) {
+        final prefill = args['prefill'];
+        if (prefill is Map) {
+          titleController.text = prefill['title'] ?? '';
+          messageController.text = prefill['body'] ?? '';
+        } else if (prefill is String) {
+          titleController.text = prefill;
+        }
+      }
+    }
   }
 
   @override

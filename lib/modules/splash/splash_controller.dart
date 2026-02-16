@@ -69,6 +69,9 @@ class SplashController extends GetxController {
         await Future.delayed(_minDisplayDuration - elapsed);
       }
 
+      // Step 4: Final Delay (User Request: "Jeda dulu 2 detik")
+      await Future.delayed(const Duration(seconds: 2));
+
       // Navigate
       Get.offAllNamed(destination);
     } on DeviceBindingException catch (e) {

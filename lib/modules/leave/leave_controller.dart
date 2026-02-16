@@ -117,8 +117,9 @@ class LeaveController extends GetxController {
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               onPressed: () {
                 // Determine navigation stack safety
-                if (Get.isDialogOpen ?? false)
+                if (Get.isDialogOpen ?? false) {
                   Get.back(); // Close Success Dialog
+                }
                 clearForm();
                 Get.offAllNamed(AppRoutes.home); // Reset to Home
               },

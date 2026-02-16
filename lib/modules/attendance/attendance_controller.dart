@@ -51,7 +51,13 @@ class AttendanceController extends GetxController {
       todayAttendance.value = attendance;
       _determineState();
     } catch (e) {
-      _logger.e('Failed to check daily status', error: e);
+      if (e.toString().contains('SocketException') ||
+          e.toString().contains('ClientException') ||
+          e.toString().contains('Network is unreachable')) {
+        _logger.w('⚠️ Offline: Cannot check daily status ($e)');
+      } else {
+        _logger.e('Failed to check daily status', error: e);
+      }
     }
   }
 

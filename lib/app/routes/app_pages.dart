@@ -25,6 +25,12 @@ import '../../modules/admin/admin_binding.dart';
 import '../../modules/admin/views/admin_dashboard_view.dart';
 import '../../modules/admin/employee_list/employee_list_binding.dart';
 import '../../modules/admin/employee_list/employee_list_view.dart';
+import '../../modules/admin/views/admin_broadcast_view.dart';
+import '../../modules/admin/controllers/admin_broadcast_controller.dart';
+import '../../modules/admin/views/leave_approval_view.dart';
+import '../../modules/admin/analytics/analytics_view.dart';
+import '../../modules/admin/views/posko_view.dart';
+import '../../modules/admin/controllers/posko_controller.dart';
 
 /// App pages configuration for GetX routing
 class AppPages {
@@ -104,6 +110,39 @@ class AppPages {
       page: () => const EmployeeListView(),
       binding: EmployeeListBinding(),
       transition: Transition.rightToLeft,
+    ),
+    // 🚀 Copilot Routes & Aliases
+    GetPage(
+      name: '/admin/announcement/create',
+      page: () => const AdminBroadcastView(),
+      binding: BindingsBuilder(() {
+        Get.put(AdminBroadcastController());
+      }),
+    ),
+    GetPage(
+      name: '/admin/approval',
+      page: () => const LeaveApprovalView(),
+    ),
+    GetPage(
+      name: '/admin/employee',
+      page: () => const EmployeeListView(),
+      binding: EmployeeListBinding(),
+    ),
+    GetPage(
+      name: '/admin/posko',
+      page: () => const PoskoView(),
+      binding: BindingsBuilder(() {
+        Get.put(PoskoController());
+      }),
+    ),
+    // Export Redirection (To Analytics/Recap Page with Export Button)
+    GetPage(
+      name: '/admin/rekap',
+      page: () => const AnalyticsView(),
+    ),
+    GetPage(
+      name: '/admin/history',
+      page: () => const AnalyticsView(),
     ),
   ];
 }

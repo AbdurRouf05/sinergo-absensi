@@ -13,7 +13,7 @@ import 'package:sinergo_app/modules/admin/controllers/admin_broadcast_controller
 import 'package:sinergo_app/modules/admin/views/posko_view.dart';
 import 'package:sinergo_app/modules/admin/controllers/posko_controller.dart';
 import 'package:sinergo_app/modules/admin/views/overtime_approval_view.dart';
-import 'package:sinergo_app/modules/admin/dashboard/widgets/smart_insight_card.dart';
+import 'package:sinergo_app/modules/admin/dashboard/widgets/hr_copilot_widget.dart';
 
 class AdminDashboardView extends GetView<AdminController> {
   const AdminDashboardView({super.key});
@@ -43,7 +43,7 @@ class AdminDashboardView extends GetView<AdminController> {
               const SizedBox(height: 12),
 
               // AI INSIGHT CARD (New Feature)
-              const SmartInsightCard(),
+              const HrCopilotWidget(),
 
               const SizedBox(height: 12),
 

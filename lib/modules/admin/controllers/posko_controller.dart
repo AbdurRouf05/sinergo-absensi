@@ -242,8 +242,15 @@ class PoskoController extends GetxController {
       await _syncService.syncMasterData();
       await _loadFromLocal();
     } catch (e) {
-      Get.snackbar("Error", "Gagal menyegarkan data: $e",
-          backgroundColor: Colors.red, colorText: Colors.white);
+      if (e.toString().contains('SocketException') ||
+          e.toString().contains('ClientException') ||
+          e.toString().contains('Network is unreachable')) {
+        Get.snackbar("Offline", "Data lokal ditampilkan (Tidak ada internet)",
+            backgroundColor: Colors.orange, colorText: Colors.white);
+      } else {
+        Get.snackbar("Error", "Gagal menyegarkan data: $e",
+            backgroundColor: Colors.red, colorText: Colors.white);
+      }
     } finally {
       isLoading.value = false;
     }

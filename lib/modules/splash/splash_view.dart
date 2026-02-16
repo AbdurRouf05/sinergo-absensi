@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../app/theme/app_colors.dart';
-import '../../core/widgets/sinergo_logo.dart';
 import 'splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
@@ -133,91 +132,43 @@ class _AnimatedSplashBody extends StatefulWidget {
 }
 
 class _AnimatedSplashBodyState extends State<_AnimatedSplashBody>
-    with TickerProviderStateMixin {
-  late final AnimationController _logoController;
-  late final AnimationController _textController;
-  late final AnimationController _statusController;
-
-  late final Animation<double> _logoFade;
-  late final Animation<double> _logoScale;
-  late final Animation<double> _titleFade;
-  late final Animation<Offset> _titleSlide;
-  late final Animation<double> _subtitleFade;
-  late final Animation<double> _statusFade;
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _scaleAnimation;
+  late final Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
-
-    // Logo: fade in + gentle scale up (0 → 1200ms) — SLOW & ELEGANT
-    _logoController = AnimationController(
+    _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     );
-    _logoFade = CurvedAnimation(
-      parent: _logoController,
-      curve: Curves.easeOut,
-    );
-    _logoScale = Tween<double>(begin: 0.7, end: 1.0).animate(
-      CurvedAnimation(parent: _logoController, curve: Curves.easeOutBack),
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.6, curve: Curves.easeIn),
     );
 
-    // Text: fade in + slide up (800ms delay, 900ms duration)
-    _textController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    );
-    _titleFade = CurvedAnimation(
-      parent: _textController,
-      curve: Curves.easeOut,
-    );
-    _titleSlide = Tween<Offset>(
-      begin: const Offset(0, 0.25),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _textController,
-      curve: Curves.easeOutCubic,
-    ));
-    _subtitleFade = Tween<double>(begin: 0, end: 1).animate(
+    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
-        parent: _textController,
-        curve: const Interval(0.4, 1.0, curve: Curves.easeOut),
+        parent: _controller,
+        curve: const Interval(0.0, 0.8, curve: Curves.easeOutBack),
       ),
     );
 
-    // Status text: fade in (1500ms delay, 700ms duration)
-    _statusController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 700),
-    );
-    _statusFade = CurvedAnimation(
-      parent: _statusController,
-      curve: Curves.easeIn,
-    );
-
-    // Stagger the animations — RELAXED TIMING
-    _startAnimations();
+    _startAnimation();
   }
 
-  Future<void> _startAnimations() async {
-    // Brief pause after native splash disappears
-    await Future.delayed(const Duration(milliseconds: 300));
-    _logoController.forward();
-
-    // Wait for logo to be mostly visible before showing text
-    await Future.delayed(const Duration(milliseconds: 800));
-    _textController.forward();
-
-    // Wait for text to settle before status appears
-    await Future.delayed(const Duration(milliseconds: 700));
-    _statusController.forward();
+  Future<void> _startAnimation() async {
+    // Small delay to let UI settle
+    await Future.delayed(const Duration(milliseconds: 100));
+    _controller.forward();
   }
 
   @override
   void dispose() {
-    _logoController.dispose();
-    _textController.dispose();
-    _statusController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -228,82 +179,51 @@ class _AnimatedSplashBodyState extends State<_AnimatedSplashBody>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Animated Logo
+        // FIXED SIMPLE LOGO (MATCHING LOGIN VIEW) + ANIMATED
         ScaleTransition(
-          scale: _logoScale,
+          scale: _scaleAnimation,
           child: FadeTransition(
-            opacity: _logoFade,
+            opacity: _fadeAnimation,
             child: Container(
-              width: 130,
-              height: 130,
+              width: 180, // Slightly larger for better visibility
+              height: 180,
               decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(28),
+                // Clean shadow, no border radius clipping to show full logo shape
+                shape: BoxShape.circle,
+                color: Colors.white, // White background for Blue Logo
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.25),
-                    blurRadius: 24,
-                    offset: const Offset(0, 12),
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              padding: const EdgeInsets.all(16),
-              child: const SinergoLogo(
-                size: 80,
-                color: Colors.white,
+              padding: const EdgeInsets.all(32), // Padding to frame the logo
+              child: Image.asset(
+                'assets/images/image.png',
+                fit: BoxFit.contain,
               ),
             ),
           ),
         ),
-        const SizedBox(height: 36),
 
-        // Animated Title
-        SlideTransition(
-          position: _titleSlide,
-          child: FadeTransition(
-            opacity: _titleFade,
-            child: const Text(
-              'SINERGO',
-              style: TextStyle(
-                fontSize: 38,
-                fontWeight: FontWeight.bold,
-                color: AppColors.white,
-                letterSpacing: 6,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 60),
 
-        // Animated Subtitle (slightly delayed)
+        // Status Section
         FadeTransition(
-          opacity: _subtitleFade,
-          child: const Text(
-            '. I D',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w300,
-              color: AppColors.white,
-              letterSpacing: 10,
-            ),
-          ),
-        ),
-        const SizedBox(height: 56),
-
-        // Status Section (fade in last)
-        FadeTransition(
-          opacity: _statusFade,
+          opacity: _fadeAnimation,
           child: Column(
             children: [
               const SizedBox(
-                width: 36,
-                height: 36,
+                width: 32,
+                height: 32,
                 child: CircularProgressIndicator(
                   color: AppColors.white,
-                  strokeWidth: 2.5,
+                  strokeWidth: 3,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
               Obx(
                 () => AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
@@ -311,9 +231,10 @@ class _AnimatedSplashBodyState extends State<_AnimatedSplashBody>
                     controller.statusMessage.value,
                     key: ValueKey(controller.statusMessage.value),
                     style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.white.withValues(alpha: 0.8),
-                      fontWeight: FontWeight.w300,
+                      fontSize: 14,
+                      color: AppColors.white.withValues(alpha: 0.9),
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 0.5,
                     ),
                   ),
                 ),

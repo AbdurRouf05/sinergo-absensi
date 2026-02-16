@@ -133,20 +133,38 @@ class SyncService extends GetxService
       try {
         await _queueSync.processSyncQueue();
       } catch (e) {
-        _logger.e('Queue sync error (isolated)', error: e);
+        if (_isNetworkError(e)) {
+          _logger.w('⚠️ Offline: Queue sync paused ($e)');
+        } else {
+          _logger.e('Queue sync error (isolated)', error: e);
+        }
       }
 
       try {
         await _notificationSync.syncNotifications();
       } catch (e) {
-        _logger.e('Notification sync error (isolated)', error: e);
+        // NotificationSyncManager handles its own logging now, but double safety:
+        if (!_isNetworkError(e)) {
+          _logger.e('Notification sync error (isolated)', error: e);
+        }
       }
     } catch (e) {
-      _logger.e('Sync error', error: e);
+      if (_isNetworkError(e)) {
+        _logger.w('⚠️ Offline: Sync skipped ($e)');
+      } else {
+        _logger.e('Sync error', error: e);
+      }
     } finally {
       isSyncing.value = false;
       await _updatePendingCount();
     }
+  }
+
+  bool _isNetworkError(dynamic e) {
+    final s = e.toString();
+    return s.contains('SocketException') ||
+        s.contains('ClientException') ||
+        s.contains('Network is unreachable');
   }
 
   @override

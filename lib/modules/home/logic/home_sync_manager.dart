@@ -35,7 +35,13 @@ class HomeSyncManager {
     try {
       await _fetchServerToday(user, localAtt);
     } catch (e) {
-      _logger.e("Sync Down Today Error", error: e);
+      if (e.toString().contains('SocketException') ||
+          e.toString().contains('ClientException') ||
+          e.toString().contains('Network is unreachable')) {
+        _logger.w("⚠️ Offline: Cannot fetch today's attendance ($e)");
+      } else {
+        _logger.e("Sync Down Today Error", error: e);
+      }
     }
   }
 

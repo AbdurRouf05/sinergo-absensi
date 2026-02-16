@@ -78,8 +78,15 @@ class ProfileController extends GetxController {
           backgroundColor: Colors.green, colorText: Colors.white);
     } catch (e) {
       Get.back();
-      Get.snackbar("Gagal", e.toString(),
-          backgroundColor: Colors.red, colorText: Colors.white);
+      if (e.toString().contains('SocketException') ||
+          e.toString().contains('ClientException') ||
+          e.toString().contains('Network is unreachable')) {
+        Get.snackbar("Offline", "Gagal update profil (Tidak ada internet)",
+            backgroundColor: Colors.orange, colorText: Colors.white);
+      } else {
+        Get.snackbar("Gagal", e.toString(),
+            backgroundColor: Colors.red, colorText: Colors.white);
+      }
     }
   }
 

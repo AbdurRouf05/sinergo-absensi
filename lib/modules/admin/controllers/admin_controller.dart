@@ -406,4 +406,43 @@ class AdminController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  // ============ DEMO MODE GENERATOR (FORCED LOGIC) ============
+  // ============ DEMO MODE GENERATOR (FORCED LOGIC) ============
+  String generateDemoContext() {
+    List<String> reportLines = [];
+
+    // Use existing employees list from this controller
+    var empList = employees;
+
+    // FAILSAFE DEMO: Jika list kosong, anggap ada 3 orang ini
+    if (empList.isEmpty) {
+      return """
+- Admin: HADIR (Status: Tepat Waktu 07:00) ✅
+- Tes1: SEDANG IZIN/CUTI (Sakit) ℹ️
+- Tes2: TERLAMBAT (Masuk jam 09:36) ⚠️
+""";
+    }
+
+    // LOGIKA SKENARIO (HARDCODED UNTUK DEMO)
+    for (var emp in empList) {
+      String name = (emp.name ?? "").toLowerCase();
+
+      if (name.contains("admin")) {
+        // SKENARIO 1: ADMIN SELALU HADIR
+        reportLines.add("- ${emp.name}: HADIR (Status: Tepat Waktu 07:00) ✅");
+      } else if (name.contains("tes1")) {
+        // SKENARIO 2: TES1 SELALU IZIN
+        reportLines.add("- ${emp.name}: SEDANG IZIN/CUTI ℹ️");
+      } else if (name.contains("tes2")) {
+        // SKENARIO 3: TES2 SELALU TERLAMBAT (FIXED HERE)
+        reportLines.add("- ${emp.name}: TERLAMBAT (Masuk jam 09:36) ⚠️");
+      } else {
+        // Sisa karyawan lain (jika ada) baru cek logic asli atau anggap Alpa
+        reportLines.add("- ${emp.name}: ALPA (Belum Absen) ❌");
+      }
+    }
+
+    return reportLines.join("\n");
+  }
 }

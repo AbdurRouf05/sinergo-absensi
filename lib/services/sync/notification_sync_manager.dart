@@ -39,8 +39,14 @@ class NotificationSyncManager {
       _logger
           .i('Successfully synced ${locals.length} notifications to local DB');
     } catch (e, stackTrace) {
-      _logger.e('Failed to sync notifications',
-          error: e, stackTrace: stackTrace);
+      if (e.toString().contains('SocketException') ||
+          e.toString().contains('ClientException') ||
+          e.toString().contains('Network is unreachable')) {
+        _logger.w('⚠️ Offline: Cannot sync notifications ($e)');
+      } else {
+        _logger.e('Failed to sync notifications',
+            error: e, stackTrace: stackTrace);
+      }
     }
   }
 
