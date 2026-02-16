@@ -1,51 +1,51 @@
-# SINERGO ATTENDANCE SYSTEM
+# SISTEM PRESENSI SINERGO (SINERGO ATTENDANCE SYSTEM)
 
-**Copyright (c) 2026 Abdur Rouf. All Rights Reserved.**
+**Hak Cipta (c) 2026 Abdur Rouf. Seluruh Hak Cipta Dilindungi Undang-Undang.**
 
-This repository contains the source code for the **Sinergo Attendance System**, a robust mobile application developed using **Flutter** and strictly adhering to **Clean Architecture** principles and **GetX** specifically designed for high scalability and offline-first capabilities.
+Repositori ini berisi kode sumber untuk **Sistem Presensi Sinergo**, sebuah aplikasi mobile berbasis **Flutter** yang dikembangkan dengan prinsip **Clean Architecture** dan **GetX**, dirancang khusus untuk skalabilitas tinggi dan kemampuan offline-first.
 
-## LEGAL NOTICE AND RESTRICTIONS
+## PEMBERITAHUAN HUKUM DAN BATASAN PENGGUNAAN
 
-**WARNING: PROPRIETARY SOFTWARE**
+**PERINGATAN: PERANGKAT LUNAK PROPRIETARY (KEPEMILIKAN PRIBADI)**
 
-This source code is the intellectual property of **Abdur Rouf**. It is published on GitHub primarily for portfolio and educational demonstration purposes.
+Kode sumber ini adalah kekayaan intelektual eksklusif milik **Abdur Rouf**. Kode ini dipublikasikan di GitHub semata-mata untuk tujuan portofolio dan demonstrasi edukasi.
 
-### STRICTLY PROHIBITED ACTIONS
+### TINDAKAN YANG DILARANG KERAS
 
-1.  **NO COMMERCIAL USE**: It is strictly forbidden to use this code, in whole or in part, for any commercial product, service, or business operation without explicit written permission from the owner.
-2.  **NO UNAUTHORIZED DISTRIBUTION**: You are not allowed to re-upload, mirror, or distribute this code on any platform.
-3.  **NO PLAGIARISM**: claiming this work as your own or removing copyright headers is a violation of intellectual property rights.
+1.  **DILARANG PENGGUNAAN KOMERSIL**: Dilarang keras menggunakan kode ini, baik sebagian maupun keseluruhan, untuk produk komersial, layanan berbayar, atau operasional bisnis tanpa izin tertulis yang eksplisit dari pemilik.
+2.  **DILARANG DISTRIBUSI TANPA IZIN**: Anda tidak diperbolehkan mengunggah ulang, mendistribusikan, atau menyebarkan kode ini di platform manapun.
+3.  **DILARANG PLAGIASI**: Mengklaim karya ini sebagai milik Anda sendiri atau menghapus header hak cipta merupakan pelanggaran serius terhadap hak kekayaan intelektual.
 
-**Any violation of these terms may result in legal action.**
+**Setiap pelanggaran terhadap ketentuan ini dapat dikenakan tindakan hukum.**
 
 ---
 
-## PROJECT OVERVIEW
+## RINGKASAN PROYEK
 
-This application is engineered to handle complex attendance workflows with a focus on data integrity and user experience.
+Aplikasi ini direkayasa untuk menangani alur kerja absensi yang kompleks dengan fokus utama pada integritas data dan pengalaman pengguna.
 
-### Key Technical Features
+### Fitur Teknis Utama
 
 - **Framework**: Flutter (Dart)
-- **Architecture**: Clean Architecture (Domain, Data, Presentation Layers)
-- **State Management**: GetX
-- **Local Database**: Isar (NoSQL, Offline-first)
-- **Backend Integration**: PocketBase (Realtime Sync)
-- **Security**: Encrypted Local Storage, Role-Based Access Control
+- **Arsitektur**: Clean Architecture (Domain, Data, Presentation Layers)
+- **Manajemen State**: GetX
+- **Database Lokal**: Isar (NoSQL, Offline-first)
+- **Integrasi Backend**: PocketBase (Realtime Sync)
+- **Keamanan**: Penyimpanan Lokal Terenkripsi, Role-Based Access Control
 
-### System Requirements
+### Persyaratan Sistem
 
-To build and run this project for review purposes:
+Untuk membangun dan menjalankan proyek ini bagi keperluan peninjauan:
 
-- **Flutter SDK**: Stable Channel (Latest)
-- **Dart SDK**: Compatible version
+- **Flutter SDK**: Stable Channel (Versi Terbaru)
+- **Dart SDK**: Versi yang kompatibel
 - **Android SDK**: API Level 34+ (Upside Down Cake)
 
 ---
 
-## CONTACT
+## KONTAK
 
-For business inquiries, licensing, or permission requests, please contact:
+Untuk pertanyaan bisnis, lisensi, atau permintaan izin, silakan hubungi:
 
 **Abdur Rouf**
-_(Profile information available on GitHub)_
+_(Informasi profil tersedia di GitHub)_
