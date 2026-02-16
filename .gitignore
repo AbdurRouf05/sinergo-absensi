@@ -80,3 +80,8 @@ pb_schema*.json
 
 # Internal Refinement Docs
 docs/lomba_refinement/
+
+# Archived & Private Docs
+docs/legacy_archive/
+docs/migrasi/
+docs/scripts/
