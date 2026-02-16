@@ -1,61 +1,51 @@
-# SEAGMA PRESENCE
+# SINERGO ATTENDANCE SYSTEM
 
-Project Presensi Mobile (Offline-First) berbasis Flutter dengan arsitektur Clean Architecture + GetX.
+**Copyright (c) 2026 Abdur Rouf. All Rights Reserved.**
 
-## 📋 Prasyarat (Prerequisites)
+This repository contains the source code for the **Sinergo Attendance System**, a robust mobile application developed using **Flutter** and strictly adhering to **Clean Architecture** principles and **GetX** specifically designed for high scalability and offline-first capabilities.
 
-Sebelum memulai, pastikan developer memiliki:
+## LEGAL NOTICE AND RESTRICTIONS
 
-* **Flutter SDK**: Versi 3.22.x atau terbaru (Stable Channel).
-* **Dart SDK**: Versi 3.4.x.
-* **Android Studio** / **VS Code** dengan plugin Flutter.
-* **Java JDK**: Versi 17 (Disarankan) atau 11.
-* **Android SDK**: Command-line tools dan Build-tools terinstall.
+**WARNING: PROPRIETARY SOFTWARE**
 
-## 🚀 Cara Setup Project (How to Setup)
+This source code is the intellectual property of **Abdur Rouf**. It is published on GitHub primarily for portfolio and educational demonstration purposes.
 
-Ikuti langkah ini setelah melakukan *clone* repository:
+### STRICTLY PROHIBITED ACTIONS
 
-1. **Install Dependencies**
+1.  **NO COMMERCIAL USE**: It is strictly forbidden to use this code, in whole or in part, for any commercial product, service, or business operation without explicit written permission from the owner.
+2.  **NO UNAUTHORIZED DISTRIBUTION**: You are not allowed to re-upload, mirror, or distribute this code on any platform.
+3.  **NO PLAGIARISM**: claiming this work as your own or removing copyright headers is a violation of intellectual property rights.
 
-    ```bash
-    flutter pub get
-    ```
+**Any violation of these terms may result in legal action.**
 
-2. **Generate Code (Isar & Mockito)**
-    Project ini menggunakan `build_runner` untuk generate code database Isar.
+---
 
-    ```bash
-    dart run build_runner build --delete-conflicting-outputs
-    ```
+## PROJECT OVERVIEW
 
-3. **Setup Environment (Android)**
-    Pastikan file `android/local.properties` (otomatis dibuat oleh Flutter/Android Studio) menunjuk ke lokasi SDK yang benar.
-    *Biasanya, cukup buka project folder `android` di Android Studio, dan biarkan Gradle melakukan sync.*
+This application is engineered to handle complex attendance workflows with a focus on data integrity and user experience.
 
-## 📱 Cara Menjalankan (Run)
+### Key Technical Features
 
-Koneksikan device Android (Physical Device atau Emulator API 24+), lalu jalankan:
+- **Framework**: Flutter (Dart)
+- **Architecture**: Clean Architecture (Domain, Data, Presentation Layers)
+- **State Management**: GetX
+- **Local Database**: Isar (NoSQL, Offline-first)
+- **Backend Integration**: PocketBase (Realtime Sync)
+- **Security**: Encrypted Local Storage, Role-Based Access Control
 
-```bash
-flutter run
-```
+### System Requirements
 
-## 🛠️ Arsitektur & Struktur Folder
+To build and run this project for review purposes:
 
-Lihat dokumen lengkap di folder [docs/](docs/).
+- **Flutter SDK**: Stable Channel (Latest)
+- **Dart SDK**: Compatible version
+- **Android SDK**: API Level 34+ (Upside Down Cake)
 
-* `docs/MASTER_ROADMAP.md`: Blueprint arsitektur dan timeline.
+---
 
-## 🤝 Panduan Partner (Contribution)
+## CONTACT
 
-**Untuk Partner / Rekan Kerja:**
-Silakan baca dokumen **[ONBOARDING_REKAN.md](ONBOARDING_REKAN.md)** untuk panduan lengkap setup dan workflow kerja.
+For business inquiries, licensing, or permission requests, please contact:
 
-### Hak Akses & Workflow
-
-Partner memiliki akses **Read & Write** (Clone, Pull, Push).
-Kita menggunakan metode **Direct Push** ke branch `main`.
-
-**Aturan Emas (Golden Rule):**
-> ⚠️ **WAJIB** melakukan `git pull origin main` sebelum mulai coding setiap hari untuk menghindari bentrok code.
+**Abdur Rouf**
+_(Profile information available on GitHub)_
