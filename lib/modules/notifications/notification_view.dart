@@ -67,7 +67,6 @@ class NotificationView extends GetView<NotificationController> {
       AlertDialog(
         title: Text(
           item.title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
         content: Column(
@@ -78,7 +77,10 @@ class NotificationView extends GetView<NotificationController> {
             const SizedBox(height: 16),
             Text(
               DateFormat('dd MMM yyyy, HH:mm').format(item.createdAt),
-              style: const TextStyle(fontSize: 10, color: Colors.grey),
+              style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -89,11 +91,17 @@ class NotificationView extends GetView<NotificationController> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                foregroundColor: Colors.black, // Black text on button
                 padding: const EdgeInsets.symmetric(vertical: 12),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: const BorderSide(color: Colors.black, width: 2.5),
+                ),
               ),
               onPressed: () => Get.back(),
-              child: const Text("Tutup"),
+              child: const Text("Tutup",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
         ],

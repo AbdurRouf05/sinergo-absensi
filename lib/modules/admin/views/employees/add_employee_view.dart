@@ -58,18 +58,26 @@ class AddEmployeeView extends GetView<AdminEmployeeController> {
                 const SizedBox(height: 32),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 56,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
+                      elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
+                        side: const BorderSide(color: Colors.black, width: 2.5),
                       ),
                     ),
                     onPressed: controller.createEmployee,
-                    child: const Text("SIMPAN KARYAWAN",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      "SIMPAN KARYAWAN",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -107,93 +115,192 @@ class AddEmployeeView extends GetView<AdminEmployeeController> {
     TextInputType inputType = TextInputType.text,
     String? hint,
   }) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword,
-      keyboardType: inputType,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        prefixIcon: Icon(icon),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black, width: 2.5),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 0,
+                offset: Offset(4, 4),
+              ),
+            ],
+          ),
+          child: TextField(
+            controller: controller,
+            obscureText: isPassword,
+            keyboardType: inputType,
+            decoration: InputDecoration(
+              hintText: hint,
+              prefixIcon: Icon(icon, color: Colors.black),
+              border: InputBorder.none,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildOfficeDropdown() {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: "Kantor Utama",
-        prefixIcon: const Icon(Icons.location_city),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      // Fix: Ensure value exists in items
-      initialValue: controller.availableOffices
-              .any((o) => o.odId == controller.selectedOffice.value?.odId)
-          ? controller.selectedOffice.value?.odId
-          : null,
-      items: controller.availableOffices.map((office) {
-        return DropdownMenuItem(
-          value: office.odId,
-          child: Text(office.name, overflow: TextOverflow.ellipsis),
-        );
-      }).toList(),
-      onChanged: (val) {
-        final selected =
-            controller.availableOffices.firstWhereOrNull((o) => o.odId == val);
-        controller.selectedOffice.value = selected;
-      },
-      validator: (val) => val == null ? "Wajib dipilih" : null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Kantor Utama",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black, width: 2.5),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 0,
+                offset: Offset(4, 4),
+              ),
+            ],
+          ),
+          child: DropdownButtonFormField<String>(
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.location_city, color: Colors.black),
+              border: InputBorder.none,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            ),
+            // Fix: Ensure value exists in items
+            initialValue: controller.availableOffices
+                    .any((o) => o.odId == controller.selectedOffice.value?.odId)
+                ? controller.selectedOffice.value?.odId
+                : null,
+            items: controller.availableOffices.map((office) {
+              return DropdownMenuItem(
+                value: office.odId,
+                child: Text(office.name, overflow: TextOverflow.ellipsis),
+              );
+            }).toList(),
+            onChanged: (val) {
+              final selected = controller.availableOffices
+                  .firstWhereOrNull((o) => o.odId == val);
+              controller.selectedOffice.value = selected;
+            },
+            validator: (val) => val == null ? "Wajib dipilih" : null,
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildShiftDropdown() {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: "Shift Kerja",
-        prefixIcon: const Icon(Icons.access_time),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      // Fix: Ensure value exists in items
-      initialValue: controller.availableShifts
-              .any((s) => s.odId == controller.selectedShift.value?.odId)
-          ? controller.selectedShift.value?.odId
-          : null,
-      items: controller.availableShifts.map((shift) {
-        return DropdownMenuItem(
-          value: shift.odId, // Use ODID (String)
-          child: Text("${shift.name} (${shift.startTime}-${shift.endTime})",
-              overflow: TextOverflow.ellipsis),
-        );
-      }).toList(),
-      onChanged: (val) {
-        final selected =
-            controller.availableShifts.firstWhereOrNull((s) => s.odId == val);
-        controller.selectedShift.value = selected;
-      },
-      validator: (val) => val == null ? "Wajib dipilih" : null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Shift Kerja",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black, width: 2.5),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 0,
+                offset: Offset(4, 4),
+              ),
+            ],
+          ),
+          child: DropdownButtonFormField<String>(
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.access_time, color: Colors.black),
+              border: InputBorder.none,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            ),
+            // Fix: Ensure value exists in items
+            initialValue: controller.availableShifts
+                    .any((s) => s.odId == controller.selectedShift.value?.odId)
+                ? controller.selectedShift.value?.odId
+                : null,
+            items: controller.availableShifts.map((shift) {
+              return DropdownMenuItem(
+                value: shift.odId, // Use ODID (String)
+                child: Text(
+                    "${shift.name} (${shift.startTime}-${shift.endTime})",
+                    overflow: TextOverflow.ellipsis),
+              );
+            }).toList(),
+            onChanged: (val) {
+              final selected = controller.availableShifts
+                  .firstWhereOrNull((s) => s.odId == val);
+              controller.selectedShift.value = selected;
+            },
+            validator: (val) => val == null ? "Wajib dipilih" : null,
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildRoleDropdown() {
-    return DropdownButtonFormField<UserRole>(
-      decoration: InputDecoration(
-        labelText: "Role Akses",
-        prefixIcon: const Icon(Icons.security),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-      initialValue: controller.selectedRole.value,
-      items: UserRole.values.map((role) {
-        return DropdownMenuItem(
-          value: role,
-          child: Text(role.displayName),
-        );
-      }).toList(),
-      onChanged: (val) {
-        if (val != null) controller.selectedRole.value = val;
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Role Akses",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black, width: 2.5),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black,
+                blurRadius: 0,
+                offset: Offset(4, 4),
+              ),
+            ],
+          ),
+          child: DropdownButtonFormField<UserRole>(
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.security, color: Colors.black),
+              border: InputBorder.none,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            ),
+            initialValue: controller.selectedRole.value,
+            items: UserRole.values.map((role) {
+              return DropdownMenuItem(
+                value: role,
+                child: Text(role.displayName),
+              );
+            }).toList(),
+            onChanged: (val) {
+              if (val != null) controller.selectedRole.value = val;
+            },
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../app/theme/app_colors.dart';
+import '../../../../data/models/user_model.dart' as model;
 import '../home_controller.dart';
 
 class HomeHeaderProfile extends GetView<HomeController> {
@@ -11,137 +11,87 @@ class HomeHeaderProfile extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [AppColors.primary, AppColors.secondary],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Obx(() {
-                final user = controller.user.value;
-                final avatarUrl = user?.avatarUrl;
-
-                if (avatarUrl != null && avatarUrl.isNotEmpty) {
-                  return CircleAvatar(
-                    radius: 28,
-                    backgroundColor: AppColors.white.withValues(alpha: 0.2),
-                    backgroundImage: CachedNetworkImageProvider(avatarUrl),
-                  );
-                }
-
-                return CircleAvatar(
-                  radius: 28,
-                  backgroundColor: AppColors.white.withValues(alpha: 0.2),
-                  child: Text(
-                    user?.name.isNotEmpty == true
-                        ? user!.name[0].toUpperCase()
-                        : 'U',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.white,
-                    ),
-                  ),
-                );
-              }),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                      () => Text(
-                        controller.greeting.value,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.white.withValues(alpha: 0.8),
-                        ),
-                      ),
-                    ),
-                    Obx(() => Text(
-                          controller.user.value?.name ?? 'User',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                          ),
-                        )),
-                  ],
-                ),
+      child: Obx(() {
+        final user = controller.user.value;
+        if (user == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black, width: 2.5),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(20),
+              child: CircleAvatar(
+                radius: 28,
+                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                backgroundImage: user.avatarUrl != null
+                    ? NetworkImage(user.avatarUrl!)
+                    : null,
+                child: user.avatarUrl == null
+                    ? Text(
+                        user.name.isNotEmpty ? user.name[0].toUpperCase() : 'U',
+                        style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black),
+                      )
+                    : null,
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.access_time,
-                  size: 16,
-                  color: AppColors.white.withValues(alpha: 0.9),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  _getCurrentTime(),
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: AppColors.white.withValues(alpha: 0.9),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Halo, ${user.name}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    _getRoleDisplayName(user.role),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.grey700,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 
-  String _getCurrentTime() {
-    final now = DateTime.now();
-    final days = [
-      'Minggu',
-      'Senin',
-      'Selasa',
-      'Rabu',
-      'Kamis',
-      'Jumat',
-      'Sabtu',
-    ];
-    final months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'Mei',
-      'Jun',
-      'Jul',
-      'Agu',
-      'Sep',
-      'Okt',
-      'Nov',
-      'Des',
-    ];
-    return '${days[now.weekday % 7]}, ${now.day} ${months[now.month - 1]} ${now.year}';
+  String _getRoleDisplayName(model.UserRole role) {
+    switch (role) {
+      case model.UserRole.employee:
+        return 'Karyawan';
+      case model.UserRole.hr:
+        return 'HR';
+      case model.UserRole.admin:
+        return 'Administrator';
+    }
   }
 }

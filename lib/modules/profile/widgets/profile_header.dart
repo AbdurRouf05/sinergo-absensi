@@ -17,9 +17,10 @@ class ProfileHeader extends GetView<ProfileController> {
       padding: const EdgeInsets.fromLTRB(20, 60, 20, 30),
       decoration: const BoxDecoration(
         color: AppColors.primary,
+        border: Border(bottom: BorderSide(color: Colors.black, width: 2.5)),
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+          bottomLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
         ),
       ),
       child: Column(
@@ -31,8 +32,15 @@ class ProfileHeader extends GetView<ProfileController> {
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.5), width: 2),
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black, width: 2.5),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black,
+                      blurRadius: 0,
+                      offset: Offset(4, 4),
+                    ),
+                  ],
                 ),
                 child: Obx(() {
                   final user = controller.user.value;
@@ -55,8 +63,8 @@ class ProfileHeader extends GetView<ProfileController> {
                           : 'U',
                       style: const TextStyle(
                           fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary),
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black),
                     ),
                   );
                 }),
@@ -92,13 +100,14 @@ class ProfileHeader extends GetView<ProfileController> {
                   );
                 },
                 child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.accent,
                       shape: BoxShape.circle,
+                      border: Border.all(color: Colors.black, width: 2),
                     ),
                     child: const Icon(Icons.camera_alt,
-                        size: 16, color: AppColors.primary)),
+                        size: 16, color: Colors.black)),
               ),
             ],
           ),
@@ -111,8 +120,14 @@ class ProfileHeader extends GetView<ProfileController> {
                       controller.user.value?.name ?? 'Loading...',
                       style: const TextStyle(
                         fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(2, 2),
+                            color: Colors.black,
+                          ),
+                        ],
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -120,30 +135,31 @@ class ProfileHeader extends GetView<ProfileController> {
                   const SizedBox(width: 8),
                   IconButton(
                       icon: const Icon(Icons.edit_note,
-                          color: Colors.white70, size: 20),
+                          color: Colors.white, size: 24),
                       onPressed: controller.toEditProfile)
                 ],
               )),
           const SizedBox(height: 4),
           Obx(() => Text(
                 controller.user.value?.email ?? '-',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 14,
-                  color: Colors.white.withValues(alpha: 0.8),
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               )),
           const SizedBox(height: 12),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(20),
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Obx(() => Text(
                   controller.user.value?.role.displayName ?? 'Employee',
                   style: const TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),
                 )),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sinergo_app/app/theme/app_colors.dart';
-import 'package:sinergo_app/data/models/notification_model.dart';
+import '../../../../app/theme/app_colors.dart';
+import '../../../../data/models/notification_model.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationLocal item;
@@ -20,47 +20,67 @@ class NotificationCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: item.isRead ? Colors.white : Colors.blue.withAlpha(12),
-          border: const Border(
-            bottom: BorderSide(color: AppColors.grey200),
-          ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black, width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 0,
+              offset: Offset(4, 4),
+            ),
+          ],
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildIcon(item.type),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: item.isRead
+                    ? AppColors.grey200
+                    : AppColors.primary.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black, width: 2),
+              ),
+              child: Icon(
+                _getIconForType(item.typeEnum),
+                color: item.isRead ? AppColors.grey600 : AppColors.primary,
+                size: 24,
+              ),
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        item.title,
-                        style: TextStyle(
-                          fontWeight:
-                              item.isRead ? FontWeight.normal : FontWeight.bold,
-                          color: AppColors.grey900,
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        DateFormat('dd MMM HH:mm').format(item.createdAt),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: AppColors.grey400,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    item.title,
+                    style: TextStyle(
+                      fontWeight:
+                          item.isRead ? FontWeight.w600 : FontWeight.w900,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     item.message,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 12,
+                      color: Colors.black87,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _formatTime(item.createdAt),
+                    style: const TextStyle(
                       color: AppColors.grey600,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -68,12 +88,12 @@ class NotificationCard extends StatelessWidget {
             ),
             if (!item.isRead)
               Container(
-                margin: const EdgeInsets.only(left: 8, top: 2),
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: AppColors.error,
                   shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black, width: 1.5),
                 ),
               ),
           ],
@@ -82,35 +102,31 @@ class NotificationCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(String type) {
-    IconData icon;
-    Color color;
-
+  IconData _getIconForType(NotificationType type) {
     switch (type) {
-      case 'success':
-        icon = Icons.check_circle_outline;
-        color = Colors.green;
-        break;
-      case 'warning':
-        icon = Icons.warning_amber_rounded;
-        color = Colors.orange;
-        break;
-      case 'error':
-        icon = Icons.error_outline;
-        color = Colors.red;
-        break;
-      default:
-        icon = Icons.info_outline;
-        color = Colors.blue;
+      case NotificationType.info:
+        return Icons.info_outline;
+      case NotificationType.success:
+        return Icons.check_circle_outline;
+      case NotificationType.warning:
+        return Icons.warning_amber_rounded;
+      case NotificationType.error:
+        return Icons.error_outline;
     }
+  }
 
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: color.withAlpha(25),
-        shape: BoxShape.circle,
-      ),
-      child: Icon(icon, color: color, size: 20),
-    );
+  String _formatTime(DateTime dateTime) {
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inDays > 0) {
+      return DateFormat('dd MMM').format(dateTime);
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours} jam lalu';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes} menit lalu';
+    } else {
+      return 'Baru saja';
+    }
   }
 }

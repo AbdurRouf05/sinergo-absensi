@@ -59,7 +59,7 @@ class LocationService extends GetxService implements ILocationService {
     await _checkPermissions();
 
     final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.best,
+      locationSettings: _locationSettings,
     );
 
     if (await isMockLocation(position)) {

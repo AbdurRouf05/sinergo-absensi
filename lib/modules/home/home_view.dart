@@ -19,13 +19,24 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.bgLight,
-      appBar: _buildAppBar(),
-      body: _buildBody(),
-      bottomNavigationBar: _buildBottomNav(),
-      floatingActionButton: _buildFab(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    // Use WillPopScope to intercept back button
+    return WillPopScope(
+      onWillPop: () async {
+        if (controller.currentTabIndex.value != 0) {
+          // If not on Home tab, switch to Home tab
+          controller.changeTab(0);
+          return false; // Do not exit app
+        }
+        return true; // Exit app if on Home tab
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.bgLight,
+        appBar: controller.currentTabIndex.value == 0 ? _buildAppBar() : null,
+        body: _buildBody(),
+        bottomNavigationBar: _buildBottomNav(),
+        floatingActionButton: _buildFab(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
     );
   }
 

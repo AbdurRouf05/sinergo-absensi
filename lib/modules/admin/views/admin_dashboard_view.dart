@@ -54,11 +54,13 @@ class AdminDashboardView extends GetView<AdminController> {
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.black, width: 2.5),
+                  boxShadow: const [
                     BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 10),
+                        color: Colors.black,
+                        blurRadius: 0,
+                        offset: Offset(4, 4)),
                   ],
                 ),
                 child: const LiveAttendanceView(),
@@ -72,15 +74,17 @@ class AdminDashboardView extends GetView<AdminController> {
                   children: [
                     const Text(
                       "Quick Actions",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black),
                     ),
                     const SizedBox(height: 12),
                     Obx(() => _buildMenuCard(
                           "Persetujuan Izin",
                           "Approve/Reject cuti",
                           Icons.rule,
-                          Colors.purple,
+                          AppColors.primary, // Violet
                           () => Get.to(() => const LeaveApprovalView()),
                           badgeCount: controller.pendingLeaves.value,
                         )),
@@ -89,7 +93,7 @@ class AdminDashboardView extends GetView<AdminController> {
                           "Persetujuan Lembur",
                           "Review klaim lembur",
                           Icons.history_toggle_off,
-                          Colors.blue,
+                          AppColors.tertiary, // Blueish
                           () {
                             controller.fetchPendingOvertime();
                             Get.to(() => const OvertimeApprovalView());
@@ -98,7 +102,7 @@ class AdminDashboardView extends GetView<AdminController> {
                         )),
                     const SizedBox(height: 12),
                     _buildMenuCard("Manajemen Karyawan", "Reset Device ID",
-                        Icons.phonelink_erase, Colors.redAccent, () {
+                        Icons.phonelink_erase, AppColors.accent, () {
                       controller.fetchEmployees();
                       Get.to(() => const EmployeeManagerView());
                     }),
@@ -143,13 +147,20 @@ class AdminDashboardView extends GetView<AdminController> {
       {int? badgeCount}) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[200]!),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.black, width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 0,
+              offset: Offset(4, 4),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -159,10 +170,11 @@ class AdminDashboardView extends GetView<AdminController> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: color.withValues(alpha: 0.1),
+                    color: color, // Use solid color for Neo-Brutalism
                     shape: BoxShape.circle,
+                    border: Border.all(color: Colors.black, width: 2.5),
                   ),
-                  child: Icon(icon, color: color),
+                  child: Icon(icon, color: Colors.black), // Black icon on color
                 ),
                 if (badgeCount != null && badgeCount > 0)
                   Positioned(
@@ -170,9 +182,11 @@ class AdminDashboardView extends GetView<AdminController> {
                     top: -5,
                     child: Container(
                       padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
+                      decoration: BoxDecoration(
+                        color: AppColors.error,
                         shape: BoxShape.circle,
+                        border: Border.all(
+                            color: Colors.black, width: 2), // Border for badge
                       ),
                       constraints: const BoxConstraints(
                         minWidth: 20,
@@ -181,7 +195,7 @@ class AdminDashboardView extends GetView<AdminController> {
                       child: Text(
                         badgeCount > 9 ? "9+" : "$badgeCount",
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
@@ -198,13 +212,18 @@ class AdminDashboardView extends GetView<AdminController> {
                 children: [
                   Text(title,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16)),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
+                          color: Colors.black)),
                   Text(subtitle,
-                      style: TextStyle(color: Colors.grey[500], fontSize: 12)),
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
-            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
           ],
         ),
       ),

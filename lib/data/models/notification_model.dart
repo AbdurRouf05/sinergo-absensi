@@ -26,4 +26,22 @@ class NotificationLocal {
 
   // Sync status
   bool isSynced = true;
+
+  @ignore
+  NotificationType get typeEnum {
+    switch (type.toLowerCase()) {
+      case 'info':
+        return NotificationType.info;
+      case 'success':
+        return NotificationType.success;
+      case 'warning':
+        return NotificationType.warning;
+      case 'error':
+        return NotificationType.error;
+      default:
+        return NotificationType.info;
+    }
+  }
 }
+
+enum NotificationType { info, success, warning, error }

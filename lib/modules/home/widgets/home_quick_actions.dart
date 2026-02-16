@@ -31,7 +31,7 @@ class HomeQuickActions extends GetView<HomeController> {
                 icon: Icons.history,
                 label: 'Riwayat',
                 color: AppColors.info,
-                onTap: () => controller.changeTab(1),
+                onTap: () => Get.toNamed(AppRoutes.history),
               ),
             ),
             const SizedBox(width: 16),
@@ -61,9 +61,16 @@ class HomeQuickActions extends GetView<HomeController> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.1),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValues(alpha: 0.3)),
+          border: Border.all(color: Colors.black, width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 0,
+              offset: Offset(4, 4),
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -71,10 +78,10 @@ class HomeQuickActions extends GetView<HomeController> {
             const SizedBox(height: 8),
             Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: color,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
               ),
             ),
           ],

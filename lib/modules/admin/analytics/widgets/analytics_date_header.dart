@@ -12,15 +12,34 @@ class AnalyticsDateHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildDateInfo(),
           OutlinedButton.icon(
             onPressed: () => _showRangePicker(context),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.black,
+              side: const BorderSide(color: Colors.black, width: 2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
             icon: const Icon(Icons.date_range, size: 18),
-            label: const Text("Pilih Rentang"),
+            label: const Text("Pilih Rentang",
+                style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),

@@ -9,21 +9,36 @@ class RecapItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.grey[200]!),
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
+          ),
+        ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(16),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              child: Text(row.employeeName[0],
-                  style: const TextStyle(
-                      color: AppColors.primary, fontWeight: FontWeight.bold)),
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black, width: 2.5),
+              ),
+              child: CircleAvatar(
+                backgroundColor: AppColors.primary,
+                child: Text(row.employeeName[0],
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -32,21 +47,22 @@ class RecapItemCard extends StatelessWidget {
                 children: [
                   Text(row.employeeName,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16)),
-                  const SizedBox(height: 4),
+                          fontWeight: FontWeight.w900, fontSize: 16)),
+                  const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
-                    runSpacing: 4,
+                    runSpacing: 8,
                     children: [
-                      _buildChip("Hadir: ${row.totalPresent}", Colors.green),
+                      _buildChip(
+                          "Hadir: ${row.totalPresent}", AppColors.success),
                       _buildChip(
                           "Telat: ${row.totalLateCount} (${row.totalLateMinutes}m)",
-                          Colors.orange),
-                      _buildChip("Izin: ${row.totalLeave}", Colors.blue),
+                          AppColors.warning),
+                      _buildChip("Izin: ${row.totalLeave}", AppColors.info),
                       _buildChip(
                           "OT: ${row.totalOvertimeCount} (${row.totalOvertimeMinutes}m)",
                           Colors.purple),
-                      _buildChip("Alpha: ${row.totalAlpha}", Colors.red),
+                      _buildChip("Alpha: ${row.totalAlpha}", AppColors.error),
                     ],
                   ),
                 ],
@@ -60,14 +76,15 @@ class RecapItemCard extends StatelessWidget {
 
   Widget _buildChip(String label, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: color, width: 1.5),
       ),
       child: Text(label,
           style: TextStyle(
-              fontSize: 10, color: color, fontWeight: FontWeight.bold)),
+              fontSize: 11, color: color, fontWeight: FontWeight.bold)),
     );
   }
 }

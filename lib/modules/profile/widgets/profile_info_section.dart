@@ -16,11 +16,12 @@ class ProfileInfoSection extends GetView<ProfileController> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
+          border: Border.all(color: Colors.black, width: 2.5),
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: Colors.black,
+              blurRadius: 0,
+              offset: Offset(4, 4),
             ),
           ],
         ),

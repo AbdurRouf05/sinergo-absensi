@@ -15,11 +15,12 @@ class HomeRecentAttendance extends GetView<HomeController> {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
           ),
         ],
       ),

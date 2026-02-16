@@ -26,8 +26,19 @@ class AnalyticsRecapList extends StatelessWidget {
             ),
             TextButton.icon(
               onPressed: onExport,
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: const BorderSide(color: Colors.black, width: 2),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              ),
               icon: const Icon(Icons.share, size: 16),
-              label: const Text("Export"),
+              label: const Text("Export",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ],
         ),

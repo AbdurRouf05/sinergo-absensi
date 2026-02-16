@@ -72,14 +72,16 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
               // ============ SAVE BUTTON ============
               SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 56,
                 child: ElevatedButton.icon(
                   onPressed: controller.isLoading.value ? null : _saveChanges,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
+                    elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
+                      side: const BorderSide(color: Colors.black, width: 2.5),
                     ),
                   ),
                   icon: controller.isLoading.value
@@ -92,7 +94,13 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
                           ),
                         )
                       : const Icon(Icons.save),
-                  label: const Text("SIMPAN PERUBAHAN"),
+                  label: const Text(
+                    "SIMPAN PERUBAHAN",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 32),
@@ -128,34 +136,73 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
 
   // ============ HEADER INFO ============
   Widget _buildInfoSection() {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: AppColors.primary,
-          child: Text(
-            (widget.employee.name.isNotEmpty)
-                ? widget.employee.name[0].toUpperCase()
-                : 'U',
-            style: const TextStyle(fontSize: 24, color: Colors.white),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
           ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(widget.employee.name,
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold)),
-              Text(widget.employee.email,
-                  style: TextStyle(color: Colors.grey[600])),
-              Text("Dept: ${widget.employee.department ?? '-'}",
-                  style: TextStyle(color: Colors.grey[500], fontSize: 12)),
-            ],
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black, width: 2.5),
+            ),
+            child: CircleAvatar(
+              radius: 30,
+              backgroundColor: AppColors.primary,
+              child: Text(
+                (widget.employee.name.isNotEmpty)
+                    ? widget.employee.name[0].toUpperCase()
+                    : 'U',
+                style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900),
+              ),
+            ),
           ),
-        ),
-      ],
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.employee.name,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w900)),
+                const SizedBox(height: 4),
+                Text(widget.employee.email,
+                    style: TextStyle(
+                        color: Colors.grey[800], fontWeight: FontWeight.w500)),
+                const SizedBox(height: 4),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.info.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: Colors.black, width: 1.5),
+                  ),
+                  child: Text("Dept: ${widget.employee.department ?? '-'}",
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -195,93 +242,116 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
         decoration: BoxDecoration(
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.black, width: 2.5),
         ),
         child: const Text("Belum ada data shift tersedia.",
-            style: TextStyle(color: Colors.grey)),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       );
     }
 
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey[300]!),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey[300]!),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2),
-        ),
-        filled: true,
-        fillColor: Colors.grey[50],
-        hintText: "Pilih Shift Kerja",
-      ),
-      isExpanded: true,
-      key: ValueKey(selectedShiftOdId),
-      initialValue: shifts.any((s) => s.odId == selectedShiftOdId)
-          ? selectedShiftOdId
-          : null,
-      items: shifts.map((ShiftLocal shift) {
-        return DropdownMenuItem<String>(
-          value: shift.odId,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                shift.name,
-                style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87),
-              ),
-              Text(
-                "${shift.startTime} - ${shift.endTime}",
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-              ),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
           ),
-        );
-      }).toList(),
-      selectedItemBuilder: (context) {
-        return shifts.map((ShiftLocal shift) {
-          return Text(
-            "${shift.name} (${shift.startTime} - ${shift.endTime})",
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            overflow: TextOverflow.ellipsis,
+        ],
+      ),
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.white,
+          hintText: "Pilih Shift Kerja",
+          hintStyle: TextStyle(color: Colors.grey[600]),
+        ),
+        isExpanded: true,
+        key: ValueKey(selectedShiftOdId),
+        initialValue: shifts.any((s) => s.odId == selectedShiftOdId)
+            ? selectedShiftOdId
+            : null,
+        items: shifts.map((ShiftLocal shift) {
+          return DropdownMenuItem<String>(
+            value: shift.odId,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  shift.name,
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black),
+                ),
+                Text(
+                  "${shift.startTime} - ${shift.endTime}",
+                  style: TextStyle(fontSize: 12, color: Colors.grey[800]),
+                ),
+              ],
+            ),
           );
-        }).toList();
-      },
-      onChanged: (String? newValue) {
-        setState(() {
-          selectedShiftOdId = newValue;
-        });
-      },
+        }).toList(),
+        selectedItemBuilder: (context) {
+          return shifts.map((ShiftLocal shift) {
+            return Text(
+              "${shift.name} (${shift.startTime} - ${shift.endTime})",
+              style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              overflow: TextOverflow.ellipsis,
+            );
+          }).toList();
+        },
+        onChanged: (String? newValue) {
+          setState(() {
+            selectedShiftOdId = newValue;
+          });
+        },
+      ),
     );
   }
 
   // ============ OFFICE CHECKBOX ============
   Widget _buildOfficeCheckbox(OfficeLocationLocal office) {
     final isSelected = selectedOfficeIds.contains(office.odId);
-    return CheckboxListTile(
-      title: Text(office.name),
-      subtitle: Text("Radius: ${office.radius}m"),
-      value: isSelected,
-      activeColor: AppColors.primary,
-      onChanged: (bool? value) {
-        setState(() {
-          if (value == true) {
-            selectedOfficeIds.add(office.odId);
-          } else {
-            selectedOfficeIds.remove(office.odId);
-          }
-        });
-      },
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: isSelected
+            ? AppColors.primary.withValues(alpha: 0.1)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+            color: isSelected ? AppColors.primary : Colors.black,
+            width: isSelected ? 2.5 : 1.5),
+      ),
+      child: CheckboxListTile(
+        title: Text(office.name,
+            style: TextStyle(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+        subtitle: Text("Radius: ${office.radius}m"),
+        value: isSelected,
+        activeColor: AppColors.primary,
+        checkColor: Colors.white,
+        onChanged: (bool? value) {
+          setState(() {
+            if (value == true) {
+              selectedOfficeIds.add(office.odId);
+            } else {
+              selectedOfficeIds.remove(office.odId);
+            }
+          });
+        },
+      ),
     );
   }
 
@@ -293,50 +363,66 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.red[50],
+        color: AppColors.error.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.red[200]!),
+        border: Border.all(color: AppColors.error, width: 2.5),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.error.withValues(alpha: 0.6),
+            blurRadius: 0,
+            offset: const Offset(4, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.warning_amber_rounded, color: Colors.red, size: 20),
-              SizedBox(width: 8),
-              Text("Zona Berbahaya",
+              const Icon(Icons.warning_amber_rounded,
+                  color: AppColors.error, size: 24),
+              const SizedBox(width: 8),
+              Text("ZONA BERBAHAYA",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
+                    fontWeight: FontWeight.w900,
+                    color: AppColors.error,
                   )),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Text(
             hasDevice
                 ? "Device ID: ${devId.length > 16 ? '${devId.substring(0, 16)}...' : devId}"
                 : "Tidak ada device yang terdaftar.",
-            style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+            style: TextStyle(
+                fontSize: 14,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: OutlinedButton.icon(
+            child: ElevatedButton.icon(
               onPressed: hasDevice
                   ? () => controller.resetDevice(
                       widget.employee.odId, widget.employee.name)
                   : null,
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.red,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: AppColors.error,
+                elevation: 0,
                 side: BorderSide(
-                    color: hasDevice ? Colors.red : Colors.grey[300]!),
+                    color: hasDevice ? AppColors.error : Colors.grey[300]!,
+                    width: 2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
               ),
               icon: const Icon(Icons.phonelink_erase),
-              label: const Text("HAPUS DEVICE BINDING"),
+              label: const Text("HAPUS DEVICE BINDING",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
         ],

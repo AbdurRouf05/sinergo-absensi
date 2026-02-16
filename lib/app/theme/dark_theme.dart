@@ -32,8 +32,11 @@ class DarkTheme {
       ),
       cardTheme: CardThemeData(
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: const BorderSide(color: AppColors.dividerDark, width: 2.5)),
         color: AppColors.surfaceDark,
+        margin: const EdgeInsets.only(bottom: 8),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -41,7 +44,9 @@ class DarkTheme {
           foregroundColor: AppColors.white,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: const BorderSide(color: AppColors.dividerDark, width: 2.5)),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -49,15 +54,17 @@ class DarkTheme {
         fillColor: AppColors.surfaceDark,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.dividerDark),
+          borderSide:
+              const BorderSide(color: AppColors.dividerDark, width: 2.5),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.dividerDark),
+          borderSide:
+              const BorderSide(color: AppColors.dividerDark, width: 2.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.accent, width: 2),
+          borderSide: const BorderSide(color: AppColors.accent, width: 2.5),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -69,20 +76,21 @@ class DarkTheme {
         selectedItemColor: AppColors.accent,
         unselectedItemColor: AppColors.grey500,
         type: BottomNavigationBarType.fixed,
+        elevation: 0,
       ),
       dividerTheme: const DividerThemeData(
         color: AppColors.dividerDark,
-        thickness: 1,
+        thickness: 2.5,
       ),
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           fontSize: 28,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w900,
           color: AppColors.white,
         ),
         headlineMedium: TextStyle(
           fontSize: 24,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w900,
           color: AppColors.white,
         ),
         bodyLarge: TextStyle(fontSize: 16, color: AppColors.white),

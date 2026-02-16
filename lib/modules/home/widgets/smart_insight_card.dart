@@ -24,33 +24,17 @@ class SmartInsightCard extends StatelessWidget {
       }
 
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 12),
         width: double.infinity,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: insight.isHighlight
-                ? [
-                    AppColors.primary.withValues(alpha: 0.1),
-                    Colors.orange.withValues(alpha: 0.05)
-                  ]
-                : [
-                    Colors.blue.shade50.withValues(alpha: 0.5),
-                    Colors.white,
-                  ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: insight.isHighlight
-                ? AppColors.primary.withValues(alpha: 0.3)
-                : Colors.blue.withValues(alpha: 0.2),
-          ),
-          boxShadow: [
+          color: insight.isHighlight ? AppColors.bgLight : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.black, width: 2.5),
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.02),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+              color: Colors.black,
+              blurRadius: 0,
+              offset: Offset(4, 4),
             ),
           ],
         ),
@@ -59,7 +43,7 @@ class SmartInsightCard extends StatelessWidget {
           child: InkWell(
             onTap: () =>
                 controller.refreshInsight(), // Tap to refresh/cycle in future
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: Row(
@@ -70,13 +54,7 @@ class SmartInsightCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
+                      border: Border.all(color: Colors.black, width: 2),
                     ),
                     child: Center(
                       child: Text(
@@ -96,16 +74,16 @@ class SmartInsightCard extends StatelessWidget {
                               "Insight",
                               style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                                 letterSpacing: 0.5,
-                                color: AppColors.grey500,
+                                color: Colors.black,
                               ),
                             ),
                             SizedBox(width: 4),
                             Icon(
                               Icons.auto_awesome,
                               size: 10,
-                              color: AppColors.primary,
+                              color: Colors.black,
                             ),
                           ],
                         ),
@@ -114,8 +92,8 @@ class SmartInsightCard extends StatelessWidget {
                           insight.message,
                           style: const TextStyle(
                             fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.grey800,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
                             height: 1.3,
                           ),
                         ),

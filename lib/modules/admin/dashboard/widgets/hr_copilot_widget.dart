@@ -150,13 +150,13 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
       height: 400, // Fixed height for chat window
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.indigo.withValues(alpha: 0.2)),
-        boxShadow: [
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.indigo.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
           ),
         ],
       ),
@@ -166,20 +166,24 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.indigo.shade50,
+              color: AppColors.tertiary, // Use a distinct color for header
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(16)),
+                  const BorderRadius.vertical(top: Radius.circular(5.5)),
+              border: const Border(
+                  bottom: BorderSide(color: Colors.black, width: 2.5)),
             ),
             child: Row(
               children: [
-                const Icon(Icons.auto_awesome, color: Colors.indigo),
+                const Icon(Icons.auto_awesome, color: Colors.black),
                 const SizedBox(width: 8),
                 const Text("Sinergo Actionable Copilot",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.indigo)),
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black,
+                        fontSize: 16)),
                 const Spacer(),
                 IconButton(
-                  icon: const Icon(Icons.close, size: 18),
+                  icon: const Icon(Icons.close, size: 18, color: Colors.black),
                   onPressed: () {
                     // Optional: Minimize or clear chat
                   },
@@ -214,24 +218,31 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: isUser
-                                ? AppColors.primary
-                                : Colors.grey.shade100,
+                            color: isUser ? AppColors.primary : Colors.white,
+                            border: Border.all(color: Colors.black, width: 2.5),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 0,
+                                offset: Offset(2, 2),
+                              )
+                            ],
                             borderRadius: BorderRadius.only(
-                              topLeft: const Radius.circular(12),
-                              topRight: const Radius.circular(12),
+                              topLeft: const Radius.circular(8),
+                              topRight: const Radius.circular(8),
                               bottomLeft: isUser
-                                  ? const Radius.circular(12)
+                                  ? const Radius.circular(8)
                                   : Radius.zero,
                               bottomRight: isUser
                                   ? Radius.zero
-                                  : const Radius.circular(12),
+                                  : const Radius.circular(8),
                             ),
                           ),
                           child: Text(
                             msg['text'],
-                            style: TextStyle(
-                                color: isUser ? Colors.white : Colors.black87),
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                         if (hasAction)
@@ -239,12 +250,19 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
                             padding: const EdgeInsets.only(top: 8.0),
                             child: ActionChip(
                               avatar: const Icon(Icons.rocket_launch,
-                                  size: 16, color: Colors.white),
+                                  size: 16, color: Colors.black),
                               label: Text(
                                   // Use dynamic label from AI or fallback
                                   msg['action']['button_label'] ?? "Buka Menu",
-                                  style: const TextStyle(color: Colors.white)),
-                              backgroundColor: Colors.orange,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                              backgroundColor: AppColors.accent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                side: const BorderSide(
+                                    color: Colors.black, width: 2.5),
+                              ),
                               onPressed: () => _handleAction(msg['action']),
                             ),
                           ),
@@ -259,7 +277,11 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
           if (_isLoading)
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: LinearProgressIndicator(minHeight: 2),
+              child: LinearProgressIndicator(
+                minHeight: 4,
+                color: Colors.black,
+                backgroundColor: Colors.white,
+              ),
             ),
 
           // Input Area
@@ -270,22 +292,44 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
                 Expanded(
                   child: TextField(
                     controller: _inputController,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                         hintText: "Ketik perintah...",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none,
+                        hintStyle: const TextStyle(color: Colors.black54),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2.5),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2.5),
                         ),
                         filled: true,
-                        fillColor: Colors.grey.shade100,
+                        fillColor: Colors.white,
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 16)),
                     onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.send, color: AppColors.primary),
-                  onPressed: _sendMessage,
+                const SizedBox(width: 8),
+                Container(
+                  decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.black, width: 2.5),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(2, 2),
+                            blurRadius: 0)
+                      ]),
+                  child: IconButton(
+                    icon: const Icon(Icons.send, color: Colors.black),
+                    onPressed: _sendMessage,
+                  ),
                 ),
               ],
             ),

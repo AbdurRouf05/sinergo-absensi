@@ -95,9 +95,10 @@ class SecurityService extends GetxService
         try {
           // Wait max 5 seconds. If stuck, throw TimeoutException.
           Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-            timeLimit: const Duration(seconds: 5),
-          );
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.high,
+            ),
+          ).timeout(const Duration(seconds: 5));
 
           isGeolocatorMock = position.isMocked;
           _logger.i(

@@ -95,21 +95,30 @@ class LiveAttendanceView extends StatelessWidget {
       width: 70, // Fixed width for alignment
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color, width: 2.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(2, 2),
+          ),
+        ],
       ),
       child: Column(
         children: [
           Text(count.toString(),
               style: TextStyle(
-                  fontSize: 20, fontWeight: FontWeight.bold, color: color)),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black)),
           const SizedBox(height: 4),
           Text(label,
               style: TextStyle(
                   fontSize: 12,
-                  color: color.withValues(alpha: 0.8),
-                  fontWeight: FontWeight.w600)),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -159,29 +168,37 @@ class LiveAttendanceView extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      elevation: 0, // Flat premium look
+      elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
+        borderRadius: BorderRadius.circular(8),
+        side: const BorderSide(color: Colors.black, width: 2.5),
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: CircleAvatar(
-          radius: 24,
-          backgroundColor: Colors.grey[200],
-          backgroundImage:
-              item.photoUrl != null ? NetworkImage(item.photoUrl!) : null,
-          child: item.photoUrl == null
-              ? Text(
-                  (item.user.name.isNotEmpty)
-                      ? item.user.name[0].toUpperCase()
-                      : 'U',
-                  style: const TextStyle(fontWeight: FontWeight.bold))
-              : null,
+        leading: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.black, width: 2),
+          ),
+          child: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.grey[200],
+            backgroundImage:
+                item.photoUrl != null ? NetworkImage(item.photoUrl!) : null,
+            child: item.photoUrl == null
+                ? Text(
+                    (item.user.name.isNotEmpty)
+                        ? item.user.name[0].toUpperCase()
+                        : 'U',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black))
+                : null,
+          ),
         ),
         title: Text(
           item.user.name.isNotEmpty ? item.user.name : 'Unknown',
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          style: const TextStyle(
+              fontWeight: FontWeight.w800, fontSize: 16, color: Colors.black),
         ),
         subtitle: Row(
           children: [
@@ -190,19 +207,23 @@ class LiveAttendanceView extends StatelessWidget {
               decoration: BoxDecoration(
                 color: statusColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.black, width: 1.5),
               ),
               child: Text(statusText,
-                  style: TextStyle(
-                      color: statusColor,
-                      fontSize: 12,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold)),
             ),
             const SizedBox(width: 8),
             Text(timeInfo,
-                style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold)),
           ],
         ),
-        trailing: Icon(statusIcon, color: statusColor),
+        trailing: Icon(statusIcon, color: Colors.black),
         onTap: () {
           // Future: Open User Detail or Map View
         },

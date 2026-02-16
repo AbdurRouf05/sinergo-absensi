@@ -5,6 +5,7 @@ import 'history_controller.dart';
 import 'widgets/history_item.dart';
 import 'widgets/date_filter_chips.dart';
 import 'widgets/history_empty_state.dart';
+import '../home/home_controller.dart' as package_home_controller;
 
 class HistoryView extends GetView<HistoryController> {
   const HistoryView({super.key});
@@ -13,12 +14,45 @@ class HistoryView extends GetView<HistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgLight,
+      appBar: AppBar(
+        title: const Text(
+          "Riwayat Kehadiran",
+          style: TextStyle(fontWeight: FontWeight.w900, color: Colors.black),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: (ModalRoute.of(context)?.canPop ?? false)
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Get.back(),
+              )
+            : IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () {
+                  try {
+                    final homeController =
+                        Get.find<package_home_controller.HomeController>();
+                    homeController.changeTab(0);
+                  } catch (e) {
+                    Get.back();
+                  }
+                },
+              ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(
+            color: Colors.black,
+            height: 2.5,
+          ),
+        ),
+      ),
       body: Column(
         children: [
           // Filter Section
           Container(
             color: AppColors.white,
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 8, top: 8),
             child: const DateFilterChips(),
           ),
 

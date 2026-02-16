@@ -71,8 +71,7 @@ class ProfileActionSection extends GetView<ProfileController> {
     bool isDestructive = false,
     Color? colorOverride,
   }) {
-    final color =
-        colorOverride ?? (isDestructive ? AppColors.error : AppColors.grey800);
+    // Color variable removed as it was unused
 
     return InkWell(
       onTap: onTap,
@@ -82,23 +81,30 @@ class ProfileActionSection extends GetView<ProfileController> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.grey200),
+          border: Border.all(color: Colors.black, width: 2.5),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 0,
+              offset: Offset(4, 4),
+            ),
+          ],
         ),
         child: Row(
           children: [
-            Icon(icon, color: color, size: 24),
+            Icon(icon, color: Colors.black, size: 24),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: color,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
             ),
-            const Icon(Icons.chevron_right, color: AppColors.grey400),
+            const Icon(Icons.chevron_right, color: Colors.black),
           ],
         ),
       ),

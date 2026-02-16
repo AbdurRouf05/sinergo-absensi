@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // 1. Core Color Palette (Brand Identity)
-  static const Color primaryDeepNavy = Color(0xFF2E3D8A);
-  static const Color secondaryOceanBlue = Color(0xFF257ABA);
+  // 1. Core Color Palette (Neo-Brutalism)
+  static const Color primaryDeepNavy = Color(0xFF8B5CF6); // Bold Violet
+  static const Color secondaryOceanBlue = Color(0xFF257ABA); // Keep for now
   static const Color tertiarySkyBlue = Color(0xFF81AFE0);
-  static const Color accentWarningYellow = Color(0xFFFBD518);
+  static const Color accentWarningYellow = Color(0xFFFF6B6B); // Red for accent
 
   // Aliases for easier use
   static const Color primary = primaryDeepNavy;
@@ -18,31 +18,31 @@ class AppColors {
 
   // 2. Theme Adaptation Colors
   // Light Theme
-  static const Color bgLight = Color(0xFFF8FAFC);
-  static const Color surfaceLight = Color(0xFFE8F1F8);
-  static const Color textLight = primaryDeepNavy;
+  static const Color bgLight = Color(0xFFFEF9C3); // Pale Yellow
+  static const Color surfaceLight = Color(0xFFFFFFFF); // Pure White
+  static const Color textLight = Color(0xFF000000); // Pure Black
   static const Color navbarLight = Color(0xFFFFFFFF);
-  static const Color dividerLight = Color(0xFFE2E8F0);
+  static const Color dividerLight = Color(0xFF000000); // Pure Black for borders
 
-  // Dark Theme
-  static const Color bgDark = Color(0xFF0F1629);
-  static const Color surfaceDark = Color(0xFF252F4A);
+  // Dark Theme (Keep existing keys but update values if needed, usually Neo-Brutalism is light, but let's keep dark usable)
+  static const Color bgDark = Color(0xFF1E1E1E);
+  static const Color surfaceDark = Color(0xFF000000);
   static const Color textDark = Color(0xFFFFFFFF);
-  static const Color navbarDark = primaryDeepNavy;
-  static const Color dividerDark = Color(0xFF334155);
+  static const Color navbarDark = Color(0xFF000000);
+  static const Color dividerDark = Color(0xFFFFFFFF);
 
   // 3. Semantic Colors (Status)
-  static const Color success = Color(0xFF22C55E);
-  static const Color error = Color(0xFFEF4444);
-  static const Color warning = Color(0xFFFBD518); // Pending Coord
-  static const Color info = Color(0xFFF97316); // Pending Mgr
-  static const Color locked = primaryDeepNavy; // Faktur
+  static const Color success = Color(0xFF22C55E); // Green
+  static const Color error = Color(0xFFFF6B6B); // Red
+  static const Color warning = Color(0xFFFBD518);
+  static const Color info = Color(0xFF3B82F6);
+  static const Color locked = primaryDeepNavy;
 
   // Keep white and black for general usage
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
 
-  // Legacy/Common colors - mapping to new palette where possible
+  // Legacy/Common colors
   static const Color grey50 = Color(0xFFF9FAFB);
   static const Color grey100 = Color(0xFFF3F4F6);
   static const Color grey200 = Color(0xFFE5E7EB);
@@ -58,5 +58,5 @@ class AppColors {
   static const Color statusPresent = success;
   static const Color statusLate = warning;
   static const Color statusAbsent = error;
-  static const Color statusLeave = Color(0xFF8B5CF6); // Kept original for leave
+  static const Color statusLeave = Color(0xFF8B5CF6);
 }

@@ -16,14 +16,14 @@ class HistoryItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        border: Border.all(color: Colors.black, width: 2.5),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: Colors.black,
+            blurRadius: 0,
+            offset: Offset(4, 4),
           ),
         ],
-        border: Border.all(color: AppColors.grey200.withValues(alpha: 0.5)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,12 +36,12 @@ class HistoryItem extends StatelessWidget {
                 Text(
                   DateFormat('d MMM yyyy', 'id_ID').format(record.checkInTime),
                   style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
                     color: AppColors.grey900,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 8),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -49,12 +49,14 @@ class HistoryItem extends StatelessWidget {
                     color:
                         _getStatusColor(record.status).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                        color: _getStatusColor(record.status), width: 1.5),
                   ),
                   child: Text(
                     record.status.displayName,
                     style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                       color: _getStatusColor(record.status),
                     ),
                   ),
