@@ -67,3 +67,6 @@ analyze_output.txt
 
 # Schema Dumps
 pb_schema*.json
+
+# Internal Refinement Docs
+docs/lomba_refinement/
