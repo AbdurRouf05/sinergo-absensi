@@ -150,6 +150,12 @@ class HistoryController extends GetxController {
   }
 
   Future<void> refreshHistory() async {
+    // 1. Trigger manual sync (push local data to server)
+    if (Get.isRegistered<ISyncService>()) {
+      await Get.find<ISyncService>().syncNow();
+    }
+
+    // 2. Reload history
     await loadHistory(reset: true);
   }
 

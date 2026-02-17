@@ -6,10 +6,10 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sinergo_app/services/auth_service.dart';
 import 'package:sinergo_app/services/isar_service.dart';
-
-import 'sync/master_data_sync_manager.dart';
-import 'sync/sync_queue_manager.dart';
-import 'sync/notification_sync_manager.dart';
+import 'package:sinergo_app/services/sync/sync_queue_manager.dart';
+import 'package:sinergo_app/modules/history/logic/history_sync_manager.dart';
+import 'package:sinergo_app/services/sync/notification_sync_manager.dart';
+import 'package:sinergo_app/services/sync/master_data_sync_manager.dart';
 
 abstract class ISyncService {
   RxBool get isSyncing;
@@ -131,6 +131,7 @@ class SyncService extends GetxService
     try {
       // Isolated: one failure doesn't block others
       try {
+        await _queueSync.recoverUnsyncedAttendance();
         await _queueSync.processSyncQueue();
       } catch (e) {
         if (_isNetworkError(e)) {
@@ -147,6 +148,14 @@ class SyncService extends GetxService
         if (!_isNetworkError(e)) {
           _logger.e('Notification sync error (isolated)', error: e);
         }
+      }
+
+      // 3. FULL SYNC: Sync Down Attendance History from Server
+      try {
+        final historySync = HistorySyncManager(_authService, _isarService);
+        await historySync.fetchRemoteHistory();
+      } catch (e) {
+        _logger.e('History Sync Down error (isolated)', error: e);
       }
     } catch (e) {
       if (_isNetworkError(e)) {

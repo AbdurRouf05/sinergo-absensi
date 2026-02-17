@@ -5,6 +5,7 @@ import 'package:sinergo_app/data/models/attendance_model.dart';
 import 'package:sinergo_app/data/models/sync_queue_model.dart';
 import 'package:sinergo_app/services/isar_service.dart';
 import 'package:sinergo_app/services/auth_service.dart';
+import 'package:sinergo_app/services/sync_service.dart';
 import 'package:http/http.dart' as http;
 
 /// Interface for AttendanceRepository to enable clean mocking in tests
@@ -135,9 +136,28 @@ class AttendanceRepository implements IAttendanceRepository {
 
   @override
   Future<void> updateAttendance(AttendanceLocal attendance) async {
+    _logger.i('Updating attendance locally (ID: ${attendance.id})...');
     await _isarService.saveAttendance(attendance);
-    // Trigger sync
-    syncToCloud(attendance.id);
+
+    // If offline or sync fails, ensure it's in the queue
+    final isOnline = Get.isRegistered<ISyncService>() &&
+        Get.find<ISyncService>().isOnline.value;
+
+    if (!isOnline) {
+      _logger.i('Offline: Adding update for ${attendance.id} to sync queue');
+      await _isarService.addToSyncQueue(SyncQueueItem()
+        ..collection = 'attendances'
+        ..localId = attendance.id
+        ..dataJson = '{}'
+        ..operation = SyncOperation.update
+        ..status = SyncStatus.pending
+        ..priority = 1
+        ..retryCount = 0
+        ..createdAt = DateTime.now());
+    } else {
+      // Trigger immediate sync
+      syncToCloud(attendance.id);
+    }
   }
 
   /// Get today's attendance for current user

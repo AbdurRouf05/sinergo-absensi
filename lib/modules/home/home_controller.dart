@@ -10,6 +10,7 @@ import 'package:sinergo_app/services/time_service.dart';
 import 'package:sinergo_app/services/wifi_service.dart';
 import '../../services/smart_recap_service.dart';
 import '../../services/notification_service.dart';
+import '../../services/sync_service.dart';
 
 import '../history/history_controller.dart';
 import 'logic/home_data_manager.dart';
@@ -116,6 +117,12 @@ class HomeController extends GetxController {
   RxString get timeStatus => diagnosticsManager.timeStatus;
 
   Future<void> refreshDashboard() async {
+    // 1. Trigger manual sync (push local data to server)
+    if (Get.isRegistered<ISyncService>()) {
+      await Get.find<ISyncService>().syncNow();
+    }
+
+    // 2. Refresh local data / fetch updates
     await syncManager.checkTodayAttendance();
     await dataManager.loadShift();
     await diagnosticsManager.loadDiagnostics();

@@ -78,23 +78,29 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget _buildDashboard() {
-    return const SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          HomeHeaderProfile(),
-          SizedBox(height: 16),
-          SmartInsightCard(),
-          SizedBox(height: 16),
-          HomeQuickActions(),
-          SizedBox(height: 24),
-          HomeTodayStatus(),
-          SizedBox(height: 24),
-          HomeRecentAttendance(),
-          SizedBox(height: 24),
-          HomeDiagnostics(),
-        ],
+    return RefreshIndicator(
+      onRefresh: controller.refreshDashboard,
+      color: AppColors.primary,
+      child: const SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        physics:
+            AlwaysScrollableScrollPhysics(), // Ensure scrollable for RefreshIndicator
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HomeHeaderProfile(),
+            SizedBox(height: 16),
+            SmartInsightCard(),
+            SizedBox(height: 16),
+            HomeQuickActions(),
+            SizedBox(height: 24),
+            HomeTodayStatus(),
+            SizedBox(height: 24),
+            HomeRecentAttendance(),
+            SizedBox(height: 24),
+            HomeDiagnostics(),
+          ],
+        ),
       ),
     );
   }

@@ -109,13 +109,13 @@ class LiveAttendanceView extends StatelessWidget {
       child: Column(
         children: [
           Text(count.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w900,
                   color: Colors.black)),
           const SizedBox(height: 4),
           Text(label,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 12,
                   color: Colors.black,
                   fontWeight: FontWeight.bold)),

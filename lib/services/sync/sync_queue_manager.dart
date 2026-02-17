@@ -45,7 +45,7 @@ class SyncQueueManager {
 
       // Perform sync based on collection type
       switch (item.collection) {
-        case 'attendance':
+        case 'attendances':
           await _syncAttendance(item);
           break;
         case 'leave_requests':
@@ -104,23 +104,31 @@ class SyncQueueManager {
     }
 
     // Build request body
-    // NOTE: Field names must match PocketBase schema
+    // NOTE: Field names MUST match PocketBase schema
     final body = {
-      'employee': attendance.userId, // Renamed from 'user' to 'employee'
+      'user_id': attendance.userId, // FIX: Match PB field name
       'location': attendance.locationId,
-      'check_in_time': attendance.checkInTime.toIso8601String(),
+      'check_in_time':
+          attendance.checkInTime.toUtc().toIso8601String(), // Send UTC to PB
       'is_wifi_verified': attendance.isWifiVerified,
       'wifi_bssid': attendance.wifiBssidUsed,
-      'lat': attendance.gpsLat, // Renamed from 'gps_lat'
-      'long': attendance.gpsLong, // Renamed from 'gps_lng'
+      'lat': attendance.gpsLat,
+      'long': attendance.gpsLong,
       'gps_accuracy': attendance.gpsAccuracy,
       'is_offline_entry': attendance.isOfflineEntry,
       'device_id': attendance.deviceIdUsed,
       'status': attendance.status.name,
+      // GANAS (Field Duty)
+      'is_ganas': attendance.isGanas,
+      'ganas_notes': attendance.ganasNotes,
+      // Overtime
+      'is_overtime': attendance.isOvertime,
+      'overtime_duration': attendance.overtimeMinutes,
+      'overtime_note': attendance.overtimeNote,
     };
 
     if (attendance.checkOutTime != null) {
-      body['out_time'] = attendance.checkOutTime!.toIso8601String();
+      body['out_time'] = attendance.checkOutTime!.toUtc().toIso8601String();
       body['out_lat'] = attendance.outLat;
       body['out_long'] = attendance.outLong;
     }
@@ -251,7 +259,7 @@ class SyncQueueManager {
       // Check if already in queue
       final existingItems = await _isarService.getPendingSyncItems(limit: 100);
       final alreadyQueued = existingItems.any(
-        (item) => item.collection == 'attendance' && item.localId == att.id,
+        (item) => item.collection == 'attendances' && item.localId == att.id,
       );
 
       if (alreadyQueued) {
@@ -266,7 +274,7 @@ class SyncQueueManager {
 
       // Add to queue
       await _isarService.addToSyncQueue(SyncQueueItem()
-        ..collection = 'attendance'
+        ..collection = 'attendances'
         ..localId = att.id
         ..dataJson = '{}'
         ..operation = operation

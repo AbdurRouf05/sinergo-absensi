@@ -377,11 +377,11 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
-              const Icon(Icons.warning_amber_rounded,
+              Icon(Icons.warning_amber_rounded,
                   color: AppColors.error, size: 24),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text("ZONA BERBAHAYA",
                   style: TextStyle(
                     fontSize: 16,
@@ -395,7 +395,7 @@ class _EmployeeDetailViewState extends State<EmployeeDetailView> {
             hasDevice
                 ? "Device ID: ${devId.length > 16 ? '${devId.substring(0, 16)}...' : devId}"
                 : "Tidak ada device yang terdaftar.",
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 14,
                 color: Colors.black87,
                 fontWeight: FontWeight.w500),

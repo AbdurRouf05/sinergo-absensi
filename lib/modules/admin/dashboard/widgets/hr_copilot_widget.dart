@@ -165,11 +165,11 @@ class _HrCopilotWidgetState extends State<HrCopilotWidget> {
           // Header
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.tertiary, // Use a distinct color for header
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(5.5)),
-              border: const Border(
+                  BorderRadius.vertical(top: Radius.circular(5.5)),
+              border: Border(
                   bottom: BorderSide(color: Colors.black, width: 2.5)),
             ),
             child: Row(
